@@ -1,24 +1,3 @@
-/* eslint-disable */
-// @ts-nocheck
-// Generated from js/views_admin2.jsx by scripts/port-js-ssot.mjs.
-"use client";
-
-
-import * as React from "react";
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Badge, Barcode, Icon, ImgPlaceholder } from "@/components/atoms";
-import { Modal, PageHead } from "@/components/molecules";
-import { useToast } from "@/components/organisms";
-import { AIS_CONTENT } from "@/data/content";
-import { AIS_ERD } from "@/data/erd";
-import { AIS_EXP } from "@/data/exp";
-import { AIS_ROLES } from "@/data/roles";
-import { AIS_DATA } from "@/data/mock-data";
-import { initials, rupiah } from "@/lib/format";
-import { useSharedList } from "@/lib/sharedStore";
-
-const window = { AIS_CONTENT, AIS_DATA, AIS_ERD, AIS_EXP, AIS_ROLES } as any;
-
 // ============================================================
 // AIS — Views: Administrator Sistem tambahan — Sequence-Admin-Sistem
 // Melengkapi admin dasar: Keamanan & Sesi (iam), Workflow Engine (wf),
@@ -38,13 +17,13 @@ function AdminSecurity() {
   ];
   const attempts = [
     { user: "unknown", ip: "45.9.x.x", waktu: "09:41", hasil: "gagal", alasan: "Password salah (5×)" },
-    { user: "bayu.pratama", ip: "182.1.x.x", waktu: "08:22", hasil: "sukses", alasan: "-" },
+    { user: "bayu.pratama", ip: "182.1.x.x", waktu: "08:22", hasil: "sukses", alasan: "—" },
     { user: "unknown", ip: "103.x.x.x", waktu: "07:55", hasil: "gagal", alasan: "Akun terkunci" },
   ];
   const ipList = [["10.10.0.0/16", "Jaringan Kampus", "Endpoint sensitif"], ["182.1.10.0/24", "VPN Pegawai", "Semua"]];
   return (
     <div className="anim-in">
-      <PageHead title="Keamanan & Sesi" desc="Kebijakan kata sandi, MFA per peran, IP allowlist, sesi aktif, dan riwayat percobaan login (subjek 30)." />
+      <PageHead title="Keamanan & Sesi" desc="Kebijakan kata sandi, MFA per peran, IP allowlist, sesi aktif, dan riwayat percobaan login (subjek 30 — IAM)." />
       <div className="card card-pad" style={{ marginBottom: 16, display: "flex", gap: 8, flexWrap: "wrap" }}>
         {[["policy", "Password & MFA"], ["ip", "IP Allowlist"], ["sesi", "Sesi Aktif"], ["attempt", "Percobaan Login"]].map(([k, l]) => <button key={k} className={"btn btn-sm " + (tab === k ? "btn-soft" : "btn-ghost")} onClick={() => setTab(k)}>{l}</button>)}
       </div>
@@ -70,7 +49,7 @@ function AdminSecurity() {
       )}
       {tab === "ip" && <div className="card"><div style={{ overflowX: "auto" }}><table className="tbl"><thead><tr><th>Rentang IP</th><th>Keterangan</th><th>Berlaku untuk</th><th>Status</th></tr></thead><tbody>{ipList.map(([ip, ket, ap], i) => (<tr key={i}><td className="mono" style={{ fontWeight: 600 }}>{ip}</td><td>{ket}</td><td style={{ fontSize: 12.5, color: "var(--ink-2)" }}>{ap}</td><td><Badge tone="green" dot>Aktif</Badge></td></tr>))}</tbody></table></div></div>}
       {tab === "sesi" && <div className="card">
-        <div className="card-pad" style={{ display: "flex", justifyContent: "flex-end", borderBottom: "1px solid var(--line)" }}><button className="btn btn-ghost btn-sm" style={{ color: "var(--red)" }} onClick={() => toast("Semua sesi dicabut (revoke-all)- insiden tercatat di audit", "")}><Icon name="lock" size={14} /> Cabut Semua Sesi</button></div>
+        <div className="card-pad" style={{ display: "flex", justifyContent: "flex-end", borderBottom: "1px solid var(--line)" }}><button className="btn btn-ghost btn-sm" style={{ color: "var(--red)" }} onClick={() => toast("Semua sesi dicabut (revoke-all) — insiden tercatat di audit", "")}><Icon name="lock" size={14} /> Cabut Semua Sesi</button></div>
         <div style={{ overflowX: "auto" }}><table className="tbl"><thead><tr><th>Pengguna</th><th>IP</th><th>Perangkat</th><th>Aktivitas</th><th></th></tr></thead><tbody>{sesi.map((s, i) => (<tr key={i}><td style={{ fontWeight: 700 }} className="mono">{s.user}</td><td className="mono" style={{ fontSize: 12 }}>{s.ip}</td><td style={{ fontSize: 12.5 }}>{s.device}</td><td style={{ fontSize: 12.5, color: "var(--ink-3)" }}>{s.aktif}</td><td><button className="btn btn-ghost btn-sm" onClick={() => toast("Sesi dicabut", "ok")}>Cabut</button></td></tr>))}</tbody></table></div>
       </div>}
       {tab === "attempt" && <div className="card"><div style={{ overflowX: "auto" }}><table className="tbl"><thead><tr><th>Pengguna</th><th>IP</th><th>Waktu</th><th>Hasil</th><th>Keterangan</th></tr></thead><tbody>{attempts.map((a, i) => (<tr key={i}><td className="mono" style={{ fontSize: 12.5 }}>{a.user}</td><td className="mono" style={{ fontSize: 12 }}>{a.ip}</td><td style={{ fontSize: 12.5 }}>{a.waktu}</td><td><Badge tone={a.hasil === "sukses" ? "green" : "red"} dot>{a.hasil}</Badge></td><td style={{ fontSize: 12.5, color: "var(--ink-2)" }}>{a.alasan}</td></tr>))}</tbody></table></div></div>}
@@ -109,7 +88,7 @@ function AdminWorkflow() {
         <div className="card-head"><Icon name="activity" size={19} style={{ color: "var(--blue)" }} /><h3>Instance Berjalan & SLA</h3></div>
         <div style={{ overflowX: "auto" }}><table className="tbl">
           <thead><tr><th>Instance</th><th>Proses</th><th>Pemohon</th><th>Tahap Kini</th><th style={{ textAlign: "center" }}>Umur</th><th>SLA</th><th></th></tr></thead>
-          <tbody>{inst.map((x) => (<tr key={x.id}><td className="mono" style={{ fontSize: 11.5, color: "var(--ink-3)" }}>{x.id}</td><td style={{ fontWeight: 700 }}>{x.def}</td><td style={{ fontSize: 12.5 }}>{x.pemohon}</td><td style={{ fontSize: 12.5 }}>{x.tahap}</td><td style={{ textAlign: "center", fontFamily: "var(--mono)" }}>{x.umur}</td><td><Badge tone={slaTone[x.sla][1]} dot={x.sla !== "ok"}>{slaTone[x.sla][0]}</Badge></td><td>{x.sla === "over" ? <button className="btn btn-soft btn-sm" onClick={() => toast("Eskalasi dikirim ke atasan + notifikasi", "ok")}>Eskalasi</button> : <span style={{ fontSize: 12, color: "var(--ink-3)" }}>-</span>}</td></tr>))}</tbody>
+          <tbody>{inst.map((x) => (<tr key={x.id}><td className="mono" style={{ fontSize: 11.5, color: "var(--ink-3)" }}>{x.id}</td><td style={{ fontWeight: 700 }}>{x.def}</td><td style={{ fontSize: 12.5 }}>{x.pemohon}</td><td style={{ fontSize: 12.5 }}>{x.tahap}</td><td style={{ textAlign: "center", fontFamily: "var(--mono)" }}>{x.umur}</td><td><Badge tone={slaTone[x.sla][1]} dot={x.sla !== "ok"}>{slaTone[x.sla][0]}</Badge></td><td>{x.sla === "over" ? <button className="btn btn-soft btn-sm" onClick={() => toast("Eskalasi dikirim ke atasan + notifikasi", "ok")}>Eskalasi</button> : <span style={{ fontSize: 12, color: "var(--ink-3)" }}>—</span>}</td></tr>))}</tbody>
         </table></div>
       </div>
     </div>
@@ -131,7 +110,7 @@ function AdminConfig() {
   const jobs = [["sync-pddikti", "0 2 * * *", "Sinkron AKM ke Feeder", "02:00", "sukses"], ["backup-db", "0 1 * * *", "Backup harian database", "01:00", "sukses"], ["reminder-ukt", "0 8 * * 1", "Pengingat tagihan UKT", "Sen 08:00", "sukses"], ["kontrak-h60", "0 6 * * *", "Cek kontrak H-60", "06:00", "gagal"]];
   return (
     <div className="anim-in">
-      <PageHead title="Parameter, Flag & Penjadwalan" desc="System setting, feature flag (rollout bertahap), penomoran resmi (NIM/surat/SK), dan scheduled job terpusat (subjek 36 - cfg)." />
+      <PageHead title="Parameter, Flag & Penjadwalan" desc="System setting, feature flag (rollout bertahap), penomoran resmi (NIM/surat/SK), dan scheduled job terpusat (subjek 36 — cfg)." />
       <div className="card card-pad" style={{ marginBottom: 16, display: "flex", gap: 8, flexWrap: "wrap" }}>
         {[["setting", "Parameter Sistem"], ["flag", "Feature Flag"], ["seq", "Penomoran"], ["job", "Scheduled Job"]].map(([k, l]) => <button key={k} className={"btn btn-sm " + (tab === k ? "btn-soft" : "btn-ghost")} onClick={() => setTab(k)}>{l}</button>)}
       </div>
@@ -250,4 +229,4 @@ function AdminFeeder() {
   );
 }
 
-export { AdminSecurity, AdminWorkflow, AdminConfig, AdminNotif, AdminIntegration, AdminFeeder };
+Object.assign(window, { AdminSecurity, AdminWorkflow, AdminConfig, AdminNotif, AdminIntegration, AdminFeeder });

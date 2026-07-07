@@ -19,6 +19,7 @@ export function AppShell({
 }: AppShellProps) {
   const [switcher, setSwitcher] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   function navigate(id: string) {
     onNavigate(id);
@@ -27,7 +28,7 @@ export function AppShell({
 
   return (
     <>
-      <div className={"app" + (navOpen ? " nav-open" : "")}>
+      <div className={"app app-glass" + (navOpen ? " nav-open" : "") + (sidebarCollapsed ? " sidebar-collapsed" : "")}>
         <div className="nav-overlay" onClick={() => setNavOpen(false)} />
         <Sidebar
           navSections={navSections}
@@ -39,7 +40,13 @@ export function AppShell({
           onToggleRoleSwitcher={() => setSwitcher((s) => !s)}
         />
         <div className="main">
-          <Topbar crumbGroup={crumbGroup} crumbPage={crumbPage} onOpenNav={() => setNavOpen(true)} />
+          <Topbar
+            crumbGroup={crumbGroup}
+            crumbPage={crumbPage}
+            onOpenNav={() => setNavOpen(true)}
+            sidebarCollapsed={sidebarCollapsed}
+            onToggleSidebar={() => setSidebarCollapsed((collapsed) => !collapsed)}
+          />
           <main className="content" key={role + activeView}>
             <PeriodBanner />
             {children}

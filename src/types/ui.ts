@@ -125,6 +125,8 @@ export type TopbarProps = {
   crumbGroup: string;
   crumbPage: string;
   onOpenNav: () => void;
+  sidebarCollapsed: boolean;
+  onToggleSidebar: () => void;
 };
 
 export type AppShellProps = {

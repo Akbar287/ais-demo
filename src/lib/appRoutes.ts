@@ -17,8 +17,12 @@ export function roleViewPath(role: DemoRole, view: string, rest: string[] = []):
   return `/${parts.map(encodePart).join("/")}`;
 }
 
-export function publicPath(page: "home" | "login" | "modul" | "berita" | "agenda", id?: string): string {
+export function publicPath(page: "home" | "login" | "modul" | "berita" | "agenda" | "programStudi" | "kalender", id?: string): string {
   if (page === "home") return "/";
-  const base = page === "agenda" ? "/agenda" : `/${page}`;
+  const base =
+    page === "agenda" ? "/agenda" :
+    page === "programStudi" ? "/program-studi" :
+    page === "kalender" ? "/kalender-akademik" :
+    `/${page}`;
   return id ? `${base}/${encodePart(id)}` : base;
 }

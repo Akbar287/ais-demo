@@ -9,12 +9,12 @@ export function Sidebar({ navSections, activeView, meta, persona, switcherOpen, 
         <div className="sb-brand-text"><b>SIAKAD ITI</b><span>Institut Teknologi Indonesia</span></div>
       </div>
 
-      <div style={{ padding: "0 14px 4px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 9, padding: "9px 11px", borderRadius: 12, background: meta.bg }}>
-          <div style={{ width: 28, height: 28, borderRadius: 9, background: "var(--surface)", color: meta.color, display: "grid", placeItems: "center", flexShrink: 0 }}>
+      <div className="sb-role-wrap">
+        <div className="sb-role" style={{ background: meta.bg }}>
+          <div className="sb-role-icon" style={{ color: meta.color }}>
             <Icon name={meta.ic} size={16} />
           </div>
-          <div style={{ minWidth: 0, flex: 1 }}>
+          <div className="sb-role-text" style={{ minWidth: 0, flex: 1 }}>
             <div style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", color: meta.color, opacity: .75 }}>Masuk sebagai</div>
             <div style={{ fontWeight: 800, fontSize: 12.5, color: meta.color, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{meta.label}</div>
           </div>
@@ -26,7 +26,7 @@ export function Sidebar({ navSections, activeView, meta, persona, switcherOpen, 
           <div className="sb-section" key={i}>
             {sec.group && <div className="sb-label">{sec.group}</div>}
             {sec.items.map((it) => (
-              <button key={it.id} className={"sb-item" + (activeView === it.id ? " active" : "")} onClick={() => onNavigate(it.id)}>
+              <button key={it.id} className={"sb-item" + (activeView === it.id ? " active" : "")} onClick={() => onNavigate(it.id)} title={it.label}>
                 <Icon name={it.ic} size={19} className="sb-ic" />
                 <span>{it.label}</span>
                 {it.badge && <span className="sb-badge" style={{ background: meta.color }}>{it.badge}</span>}

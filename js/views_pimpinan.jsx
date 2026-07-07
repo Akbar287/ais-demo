@@ -1,25 +1,3 @@
-/* eslint-disable */
-// @ts-nocheck
-// Generated from js/views_pimpinan.jsx by scripts/port-js-ssot.mjs.
-"use client";
-
-
-import * as React from "react";
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Badge, Barcode, Icon, ImgPlaceholder } from "@/components/atoms";
-import { Modal, PageHead } from "@/components/molecules";
-import { useToast } from "@/components/organisms";
-import { AIS_CONTENT } from "@/data/content";
-import { AIS_ERD } from "@/data/erd";
-import { AIS_EXP } from "@/data/exp";
-import { AIS_ROLES } from "@/data/roles";
-import { AIS_DATA } from "@/data/mock-data";
-import { initials, rupiah } from "@/lib/format";
-import { useSharedList } from "@/lib/sharedStore";
-import { PimpArea, PimpDonut, PimpStacked } from "./views_tambahan";
-
-const window = { AIS_CONTENT, AIS_DATA, AIS_ERD, AIS_EXP, AIS_ROLES } as any;
-
 // ============================================================
 // AIS — Views: PIMPINAN — Monitor Eksekutif per Domain (read-only)
 // Sequence-Pimpinan: dasbor lintas domain + drill-down detail + persetujuan.
@@ -377,4 +355,4 @@ function PimpPersetujuan() {
   );
 }
 
-export { PimpAkademik, PimpKeuangan, PimpRiset, PimpMutu, PimpSDM, PimpPersetujuan };
+Object.assign(window, { PimpAkademik, PimpKeuangan, PimpRiset, PimpMutu, PimpSDM, PimpPersetujuan });

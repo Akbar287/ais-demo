@@ -17,6 +17,13 @@ function viewIds() {
   return [...match[1].matchAll(/^\s*([A-Za-z0-9_]+):\s*\(/gm)].map((m) => m[1]);
 }
 
+function legacyViewIds() {
+  const registry = read("js/app.jsx");
+  const match = registry.match(/const VIEW_REGISTRY = \{([\s\S]*?)\n\};/);
+  assert.ok(match, "legacy VIEW_REGISTRY block must be present");
+  return [...match[1].matchAll(/^\s*([A-Za-z0-9_]+):\s*\(/gm)].map((m) => m[1]);
+}
+
 function rolesData() {
   const source = read("src/data/roles.ts").replace(
     "export const AIS_ROLES =",
@@ -49,6 +56,63 @@ function walk(dir, files = []) {
     }
   }
   return files;
+}
+
+function legacyWindowExports(source) {
+  const names = [];
+  for (const match of source.matchAll(/Object\.assign\(window,\s*\{([\s\S]*?)\}\);/g)) {
+    const body = match[1].replace(/\/\/.*$/gm, "");
+    for (const token of body.split(",")) {
+      const name = token.trim().match(/^([A-Za-z_$][\w$]*)\b/)?.[1];
+      if (name) names.push(name);
+    }
+  }
+  return names;
+}
+
+function portedExports(source) {
+  const names = [];
+  for (const match of source.matchAll(/export\s*\{\s*([\s\S]*?)\s*\};/g)) {
+    for (const token of match[1].split(",")) {
+      const name = token.trim().match(/^([A-Za-z_$][\w$]*)(?:\s+as\s+([A-Za-z_$][\w$]*))?/)?.[2] ?? token.trim().match(/^([A-Za-z_$][\w$]*)/)?.[1];
+      if (name) names.push(name);
+    }
+  }
+  return names;
+}
+
+function componentBindings(source) {
+  const names = new Set();
+
+  for (const match of source.matchAll(/import\s+([A-Za-z_$][\w$]*)\s+from\s+['"][^'"]+['"]/g)) {
+    names.add(match[1]);
+  }
+  for (const match of source.matchAll(/import\s+\*\s+as\s+([A-Za-z_$][\w$]*)\s+from\s+['"][^'"]+['"]/g)) {
+    names.add(match[1]);
+  }
+
+  for (const match of source.matchAll(/import\s*\{([\s\S]*?)\}\s*from\s+['"][^'"]+['"]/g)) {
+    for (const token of match[1].split(",")) {
+      const parts = token.trim().match(/^([A-Za-z_$][\w$]*)(?:\s+as\s+([A-Za-z_$][\w$]*))?/);
+      if (parts) names.add(parts[2] ?? parts[1]);
+    }
+  }
+
+  for (const match of source.matchAll(/\bfunction\s+([A-Z][A-Za-z0-9_]*)\b/g)) {
+    names.add(match[1]);
+  }
+  for (const match of source.matchAll(/\b(?:const|let|var)\s+([A-Z][A-Za-z0-9_]*)\s*=/g)) {
+    names.add(match[1]);
+  }
+  for (const match of source.matchAll(/\bclass\s+([A-Z][A-Za-z0-9_]*)\b/g)) {
+    names.add(match[1]);
+  }
+
+  return names;
+}
+
+function jsxComponentUses(source) {
+  return [...source.matchAll(/<\s*([A-Z][A-Za-z0-9_]*)\b/g)].map((m) => m[1]);
 }
 
 test("ported role navigation is fully backed by the view registry", () => {
@@ -87,6 +151,9 @@ test("public and role menu routes are addressable by full URLs", () => {
     "src/app/berita/[id]/page.tsx",
     "src/app/agenda/page.tsx",
     "src/app/agenda/[id]/page.tsx",
+    "src/app/program-studi/page.tsx",
+    "src/app/program-studi/[slug]/page.tsx",
+    "src/app/kalender-akademik/page.tsx",
     "src/app/[role]/[[...menu]]/page.tsx",
   ];
 
@@ -108,6 +175,41 @@ test("public and role menu routes are addressable by full URLs", () => {
   assert.ok(paths.includes("/admin/adm-users"));
   assert.ok(paths.includes("/pimpinan/pimp-dashboard"));
   assert.equal(new Set(paths).size, paths.length, "role/menu URLs must be unique");
+});
+
+test("ported from-js views cover the legacy js view files and exports", () => {
+  const legacyViews = readdirSync(path.join(root, "js"))
+    .filter((name) => /^views_.*\.jsx$/.test(name))
+    .sort();
+
+  assert.ok(legacyViews.length > 0, "legacy js views must be present for comparison");
+
+  for (const legacyFile of legacyViews) {
+    const portedFile = `src/components/features/from-js/${legacyFile.replace(/\.jsx$/, ".tsx")}`;
+    assert.ok(existsSync(path.join(root, portedFile)), `${legacyFile} must have a ported TSX file`);
+
+    const expectedExports = legacyWindowExports(read(`js/${legacyFile}`));
+    const actualExports = new Set(portedExports(read(portedFile)));
+    const missingExports = expectedExports.filter((name) => !actualExports.has(name));
+    assert.deepEqual(missingExports, [], `${portedFile} must export every legacy window symbol`);
+  }
+});
+
+test("ported view registry matches the legacy js view registry", () => {
+  assert.deepEqual(viewIds().sort(), legacyViewIds().sort(), "Next VIEW_REGISTRY must include every legacy js view id");
+});
+
+test("ported JSX component references are locally defined or imported", () => {
+  const missing = [];
+  for (const file of walk("src/components/features/from-js")) {
+    const source = read(file);
+    const bindings = componentBindings(source);
+    for (const name of new Set(jsxComponentUses(source))) {
+      if (!bindings.has(name)) missing.push(`${file}: <${name}>`);
+    }
+  }
+
+  assert.deepEqual(missing, [], "from-js JSX components must be imported or defined locally");
 });
 
 test("ported app no longer imports the legacy js folder at runtime", () => {

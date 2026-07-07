@@ -1,26 +1,5 @@
-/* eslint-disable */
-// @ts-nocheck
-// Generated from js/views_admin.jsx by scripts/port-js-ssot.mjs.
-"use client";
-
-
-import * as React from "react";
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Badge, Barcode, Icon, ImgPlaceholder } from "@/components/atoms";
-import { Modal, PageHead } from "@/components/molecules";
-import { StaffHero, useToast } from "@/components/organisms";
-import { AIS_CONTENT } from "@/data/content";
-import { AIS_ERD } from "@/data/erd";
-import { AIS_EXP } from "@/data/exp";
-import { AIS_ROLES } from "@/data/roles";
-import { AIS_DATA } from "@/data/mock-data";
-import { initials, rupiah } from "@/lib/format";
-import { useSharedList } from "@/lib/sharedStore";
-
-const window = { AIS_CONTENT, AIS_DATA, AIS_ERD, AIS_EXP, AIS_ROLES } as any;
-
 // ============================================================
-// AIS Views: ADMINISTRATOR SISTEM (IAM, RBAC, Services, Master, Audit)
+// AIS — Views: ADMINISTRATOR SISTEM (IAM, RBAC, Services, Master, Audit)
 // ============================================================
 
 function AdminDashboard({ nav }) {
@@ -53,7 +32,7 @@ function AdminDashboard({ nav }) {
       {degraded.length > 0 && (
         <div className="card card-pad" style={{ marginBottom: 18, display: "flex", alignItems: "center", gap: 14, borderLeft: "3px solid var(--red)" }}>
           <Icon name="flag" size={20} style={{ color: "var(--red)" }} />
-          <div style={{ flex: 1 }}><b style={{ fontSize: 14 }}>Peringatan performa.</b> <span style={{ color: "var(--ink-2)", fontSize: 13.5 }}>{degraded.map((d) => d.nama).join(", ")} mengalami latensi tinggi (KRS dibuka).</span></div>
+          <div style={{ flex: 1 }}><b style={{ fontSize: 14 }}>Peringatan performa.</b> <span style={{ color: "var(--ink-2)", fontSize: 13.5 }}>{degraded.map((d) => d.nama).join(", ")} mengalami latensi tinggi (KRS dibuka — beban puncak).</span></div>
           <button className="btn btn-soft btn-sm" onClick={() => nav("adm_services")}>Tinjau</button>
         </div>
       )}
@@ -123,7 +102,7 @@ function AdminUsers() {
                   <td className="mono" style={{ color: "var(--ink-3)" }}>{u.username}</td>
                   <td><div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>{u.role.split(",").map((r) => <Badge key={r} tone="blue">{r.trim()}</Badge>)}</div></td>
                   <td style={{ fontSize: 12.5, color: "var(--ink-2)" }}>{u.unit}</td>
-                  <td style={{ textAlign: "center" }}>{u.mfa ? <Icon name="shield" size={16} style={{ color: "var(--green)" }} /> : <span style={{ color: "var(--ink-3)", fontSize: 12 }}>-</span>}</td>
+                  <td style={{ textAlign: "center" }}>{u.mfa ? <Icon name="shield" size={16} style={{ color: "var(--green)" }} /> : <span style={{ color: "var(--ink-3)", fontSize: 12 }}>—</span>}</td>
                   <td style={{ fontSize: 12.5, color: "var(--ink-3)" }}>{u.terakhir}</td>
                   <td><Badge tone={stTone[u.status]} dot>{u.status}</Badge></td>
                   <td><button className="btn btn-ghost btn-sm" onClick={() => toast("Kelola akun " + u.nama)}><Icon name="edit" size={14} /></button></td>
@@ -266,7 +245,7 @@ function AdminMaster() {
   const tabs = [["tahun", "Tahun Akademik"], ["fakultas", "Fakultas"], ["prodi", "Program Studi"], ["penomoran", "Format Penomoran"]];
   return (
     <div className="anim-in">
-      <PageHead title="Master Data & Referensi" desc="Data referensi inti yang dipakai lintas service dari Configuration & Master-Data Service." />
+      <PageHead title="Master Data & Referensi" desc="Data referensi inti yang dipakai lintas service — dari Configuration & Master-Data Service." />
       <div className="seg" style={{ marginBottom: 18 }}>{tabs.map(([k, l]) => <button key={k} className={tab === k ? "on" : ""} onClick={() => setTab(k)}>{l}</button>)}</div>
       <div className="card">
         <div style={{ overflowX: "auto" }}>
@@ -299,7 +278,7 @@ function AdminAudit() {
   const lvlTone = { info: "green", warn: "amber", error: "red" };
   return (
     <div className="anim-in">
-      <PageHead title="Audit Log" desc="Jejak audit imutabel seluruh sistem dari Audit & Log Service (Elasticsearch). Semua aksi penting terekam." />
+      <PageHead title="Audit Log" desc="Jejak audit imutabel seluruh sistem — dari Audit & Log Service (Elasticsearch). Semua aksi penting terekam." />
       <div className="card card-pad" style={{ marginBottom: 16, display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
         <div className="seg">{[["semua", "Semua"], ["info", "Info"], ["warn", "Warning"], ["error", "Error"]].map(([k, l]) => <button key={k} className={lvl === k ? "on" : ""} onClick={() => setLvl(k)}>{l}</button>)}</div>
         <span style={{ marginLeft: "auto", fontSize: 13, color: "var(--ink-3)" }}>{list.length} entri · 48.2k hari ini</span>
@@ -333,7 +312,7 @@ function AdminPengumuman() {
   const [list, setList] = useState([
     { judul: "Pembukaan KRS Semester Ganjil 2026/2027", target: "Mahasiswa", tgl: "20 Jun 2026", status: "Terbit" },
     { judul: "Batas Akhir Input Nilai UAS", target: "Dosen", tgl: "18 Jun 2026", status: "Terbit" },
-    { judul: "Pemeliharaan Sistem Gateway", target: "Semua", tgl: "25 Jun 2026", status: "Terjadwal" },
+    { judul: "Pemeliharaan Sistem — Gateway", target: "Semua", tgl: "25 Jun 2026", status: "Terjadwal" },
   ]);
   const [add, setAdd] = useState(false);
   return (
@@ -360,4 +339,4 @@ function AdminPengumuman() {
   );
 }
 
-export { AdminDashboard, AdminUsers, AdminRBAC, AdminServices, AdminMaster, AdminAudit, AdminPengumuman };
+Object.assign(window, { AdminDashboard, AdminUsers, AdminRBAC, AdminServices, AdminMaster, AdminAudit, AdminPengumuman });

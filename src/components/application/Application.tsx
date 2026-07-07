@@ -11,6 +11,11 @@ import {
   EventDetail,
   EventIndex,
 } from "@/components/features/from-js/views_publik";
+import {
+  KalenderAkademikPublic,
+  ProgramStudiDetail,
+  ProgramStudiIndex,
+} from "@/components/features/public/academic-public";
 import { HOME_VIEW_BY_ROLE } from "@/config/roleRouting";
 import { VIEW_REGISTRY, type ViewId } from "@/config/viewRegistry";
 import { publicPath, roleViewPath, segmentToView } from "@/lib/appRoutes";
@@ -23,7 +28,9 @@ type AppRoute =
   | { kind: "home"; canonical: string }
   | { kind: "modul"; canonical: string }
   | { kind: "berita"; id?: string; canonical: string }
-  | { kind: "agenda"; id?: string; canonical: string };
+  | { kind: "agenda"; id?: string; canonical: string }
+  | { kind: "programStudi"; slug?: string; canonical: string }
+  | { kind: "kalender"; canonical: string };
 
 const ROLES = Object.keys(HOME_VIEW_BY_ROLE) as DemoRole[];
 
@@ -53,6 +60,12 @@ function parseRoute(pathname: string): AppRoute {
   }
   if (first === "agenda" || first === "events") {
     return { kind: "agenda", id: second, canonical: publicPath("agenda", second) };
+  }
+  if (first === "program-studi" || first === "prodi") {
+    return { kind: "programStudi", slug: second, canonical: publicPath("programStudi", second) };
+  }
+  if (first === "kalender-akademik" || first === "kalender" || first === "calendar") {
+    return { kind: "kalender", canonical: publicPath("kalender") };
   }
 
   if (isRole(first)) {
@@ -103,6 +116,8 @@ export function Application() {
       beritaDetail: (id: string) => go(publicPath("berita", id)),
       events: () => go(publicPath("agenda")),
       eventDetail: (id: string) => go(publicPath("agenda", id)),
+      programStudi: (slug?: string) => go(publicPath("programStudi", slug)),
+      kalender: () => go(publicPath("kalender")),
       home: goHome,
     };
   }, [go, goHome]);
@@ -144,6 +159,14 @@ export function Application() {
 
   if (route.kind === "agenda") {
     return route.id ? <EventDetail id={route.id} nav={nav} /> : <EventIndex nav={nav} />;
+  }
+
+  if (route.kind === "programStudi") {
+    return route.slug ? <ProgramStudiDetail slug={route.slug} nav={nav} /> : <ProgramStudiIndex nav={nav} />;
+  }
+
+  if (route.kind === "kalender") {
+    return <KalenderAkademikPublic nav={nav} />;
   }
 
   return (

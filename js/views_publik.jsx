@@ -1,26 +1,5 @@
-/* eslint-disable */
-// @ts-nocheck
-// Generated from js/views_publik.jsx by scripts/port-js-ssot.mjs.
-"use client";
-
-
-import * as React from "react";
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Badge, Barcode, BrandLogo, Icon, ImgPlaceholder } from "@/components/atoms";
-import { Modal, PageHead } from "@/components/molecules";
-import { useToast } from "@/components/organisms";
-import { AIS_CONTENT } from "@/data/content";
-import { AIS_ERD } from "@/data/erd";
-import { AIS_EXP } from "@/data/exp";
-import { AIS_ROLES } from "@/data/roles";
-import { AIS_DATA } from "@/data/mock-data";
-import { initials, rupiah } from "@/lib/format";
-import { useSharedList } from "@/lib/sharedStore";
-
-const window = { AIS_CONTENT, AIS_DATA, AIS_ERD, AIS_EXP, AIS_ROLES } as any;
-
 // ============================================================
-// SIAKAD ITI — Halaman Publik: Berita (index + detail) & Agenda/Event (index + detail)
+// AIS — Halaman Publik: Berita (index + detail) & Agenda/Event (index + detail)
 // Dipakai App router: nav.berita(), nav.beritaDetail(id), nav.events(), nav.eventDetail(id)
 // Data: window.AIS_CONTENT
 // ============================================================
@@ -29,31 +8,28 @@ const window = { AIS_CONTENT, AIS_DATA, AIS_ERD, AIS_EXP, AIS_ROLES } as any;
 function PubNav({ nav, active }) {
   const links = [
     ["Beranda", () => nav.home()],
-    ["Program Studi", () => nav.programStudi()],
-    ["Kalender Akademik", () => nav.kalender()],
+    ["Program Studi", () => nav.home("prodi")],
     ["Berita", () => nav.berita()],
     ["Agenda", () => nav.events()],
     ["Tentang", () => nav.home("tentang")],
   ];
-  const activeMap = { "Program Studi": "Program Studi", "Kalender Akademik": "Kalender Akademik", Berita: "Berita", Agenda: "Agenda" };
+  const activeMap = { Berita: "Berita", Agenda: "Agenda" };
   return (
-    <nav className="ld-nav" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "var(--topbar-bg)", backdropFilter: "blur(18px)", borderBottom: "1px solid var(--line)", display: "flex", alignItems: "center", padding: "0 32px", height: 62, gap: 10 }}>
-      <div className="ld-brand" style={{ display: "flex", alignItems: "center", gap: 12, marginRight: 32, cursor: "pointer" }} onClick={() => nav.home()}>
-        <BrandLogo size={38} priority />
-        <div className="ld-brand-text"><b style={{ fontSize: 15.5, fontWeight: 800, display: "block", lineHeight: 1.1, letterSpacing: 0 }}>Institut Teknologi Indonesia</b><span style={{ fontSize: 10.5, color: "var(--ink-3)", fontWeight: 600, letterSpacing: ".03em" }}>SISTEM INFORMASI AKADEMIK</span></div>
+    <nav className="ld-nav" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(255,255,255,.92)", backdropFilter: "blur(18px)", borderBottom: "1px solid var(--line)", display: "flex", alignItems: "center", padding: "0 32px", height: 62, gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginRight: 32, cursor: "pointer" }} onClick={() => nav.home()}>
+        <div style={{ width: 38, height: 38, borderRadius: 11, background: "linear-gradient(135deg,var(--orange),#e89b5a)", color: "#fff", display: "grid", placeItems: "center", fontWeight: 800, fontSize: 17 }}>U</div>
+        <div><b style={{ fontSize: 15.5, fontWeight: 800, display: "block", lineHeight: 1.1, letterSpacing: "-.02em" }}>Universitas</b><span style={{ fontSize: 10.5, color: "var(--ink-3)", fontWeight: 600, letterSpacing: ".03em" }}>AKADEMIK INFORMASI SISTEM</span></div>
       </div>
       <div className="ld-nav-links" style={{ display: "flex", gap: 6, flex: 1 }}>
         {links.map(([l, fn]) => {
           const on = activeMap[l] === active;
           return (
-            <button className="ld-nav-link" key={l} onClick={fn} style={{ border: "none", background: on ? "var(--orange-50)" : "none", padding: "8px 14px", fontSize: 13.5, fontWeight: on ? 800 : 600, color: on ? "var(--orange-600)" : "var(--ink-2)", cursor: "pointer", borderRadius: 10, fontFamily: "var(--sans)" }}>{l}</button>
+            <button key={l} onClick={fn} style={{ border: "none", background: on ? "var(--orange-50)" : "none", padding: "8px 14px", fontSize: 13.5, fontWeight: on ? 800 : 600, color: on ? "var(--orange-600)" : "var(--ink-2)", cursor: "pointer", borderRadius: 10, fontFamily: "var(--sans)" }}>{l}</button>
           );
         })}
       </div>
-      <div className="ld-nav-actions">
-        <button className="btn btn-ghost btn-sm ld-lang" style={{ marginRight: 6 }}>EN</button>
-        <button className="btn btn-primary ld-portal" onClick={nav.login}><Icon name="user" size={15} /> <span>Portal Akademik</span></button>
-      </div>
+      <button className="btn btn-ghost btn-sm" style={{ marginRight: 6 }}>EN</button>
+      <button className="btn btn-primary" onClick={nav.login}><Icon name="user" size={15} /> Portal Akademik</button>
     </nav>
   );
 }
@@ -64,24 +40,25 @@ function PubFooter({ nav }) {
       <div className="ld-footer" style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1.3fr 1fr 1fr 1fr", gap: 32 }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 14 }}>
-            <BrandLogo size={38} />
-            <b style={{ fontSize: 15, color: "#fff" }}>Institut Teknologi Indonesia</b>
+            <div style={{ width: 38, height: 38, borderRadius: 11, background: "linear-gradient(135deg,#ea9f5a,#e8b76a)", color: "#fff", display: "grid", placeItems: "center", fontWeight: 800, fontSize: 17 }}>U</div>
+            <b style={{ fontSize: 15, color: "#fff" }}>Universitas</b>
           </div>
-          <p style={{ fontSize: 13, lineHeight: 1.65, margin: 0 }}>Jl. Raya Puspiptek, Setu, Tangerang Selatan 15314<br />081360090013 · iti.ac.id</p>
+          <p style={{ fontSize: 13, lineHeight: 1.65, margin: 0 }}>Jl. Pendidikan No. 1, Kota Ilmu, Indonesia 12345<br />+62 21 1234 5678 · info@universitas.ac.id</p>
         </div>
-        {[["Akademik", [["Kalender Akademik", () => nav.kalender()], ["Program Studi", () => nav.programStudi()], ["Kurikulum", null], ["Perpustakaan", null]]], ["Layanan", ["PMB Online", "Portal Mahasiswa", "E-Learning", "Tracer Study"]], ["Informasi", [["Berita", () => nav.berita()], ["Agenda", () => nav.events()], ["PPID", null], ["Karir & Alumni", null]]]].map(([title, items]) => (
+        {[["Akademik", ["Kalender Akademik", "Kurikulum", "Perpustakaan", "Penelitian"]], ["Layanan", ["PMB Online", "Portal Mahasiswa", "E-Learning", "Tracer Study"]], ["Informasi", [["Berita", () => nav.berita()], ["Agenda", () => nav.events()], ["PPID", null], ["Karir & Alumni", null]]]].map(([title, items]) => (
           <div key={title}>
             <div style={{ fontWeight: 800, fontSize: 13, color: "#fff", marginBottom: 14 }}>{title}</div>
             {items.map((it) => {
               const label = Array.isArray(it) ? it[0] : it;
               const fn = Array.isArray(it) ? it[1] : null;
-              return (<div key={label} onClick={fn || undefined} style={{ fontSize: 13, marginBottom: 8, cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.color = "var(--orange)"} onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,.55)"}>{label}</div>);
+              return (<div key={label} onClick={fn || undefined} style={{ fontSize: 13, marginBottom: 8, cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.color = "#ea9f5a"} onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,.55)"}>{label}</div>);
             })}
           </div>
         ))}
       </div>
       <div style={{ maxWidth: 1200, margin: "28px auto 0", paddingTop: 20, borderTop: "1px solid rgba(255,255,255,.1)", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
-        <span>© 2026 Yayasan Pengembangan Teknologi Indonesia | Institut Teknologi Indonesia.</span>
+        <span>© 2026 Universitas. Seluruh hak dilindungi.</span>
+        <span>Ditenagai oleh <b style={{ color: "rgba(255,255,255,.7)" }}>AIS — 34 Microservice</b></span>
       </div>
     </footer>
   );
@@ -89,12 +66,12 @@ function PubFooter({ nav }) {
 
 function PubHero({ eyebrow, title, desc, kicker }) {
   return (
-    <section className="pub-hero" style={{ position: "relative", overflow: "hidden", padding: "128px 40px 56px", background: "linear-gradient(135deg, #17110c 0%, #3a2518 55%, #0f172a 100%)" }}>
-      <div style={{ position: "absolute", right: "-6%", top: "-30%", width: "45%", aspectRatio: "1", borderRadius: "50%", background: "radial-gradient(circle, rgba(217,126,52,.2) 0%, transparent 70%)" }} />
+    <section style={{ position: "relative", overflow: "hidden", padding: "128px 40px 56px", background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 55%, #0f172a 100%)" }}>
+      <div style={{ position: "absolute", right: "-6%", top: "-30%", width: "45%", aspectRatio: "1", borderRadius: "50%", background: "radial-gradient(circle, rgba(234,159,90,.18) 0%, transparent 70%)" }} />
       <div style={{ position: "absolute", left: "-6%", bottom: "-40%", width: "34%", aspectRatio: "1", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,125,210,.14) 0%, transparent 70%)" }} />
-      <div className="pub-hero-inner pub-fadeup" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--orange)", marginBottom: 12 }}>{eyebrow}</div>
-        <h1 style={{ fontSize: 42, fontWeight: 900, letterSpacing: 0, color: "#fff", margin: "0 0 12px", lineHeight: 1.1 }}>{title}</h1>
+      <div className="pub-fadeup" style={{ position: "relative", zIndex: 1, maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: "#ea9f5a", marginBottom: 12 }}>{eyebrow}</div>
+        <h1 style={{ fontSize: 42, fontWeight: 900, letterSpacing: "-.03em", color: "#fff", margin: "0 0 12px", lineHeight: 1.1 }}>{title}</h1>
         {desc && <p style={{ fontSize: 16, lineHeight: 1.6, color: "rgba(255,255,255,.7)", margin: 0, maxWidth: 620 }}>{desc}</p>}
         {kicker}
       </div>
@@ -136,9 +113,9 @@ function BeritaIndex({ nav }) {
   );
 
   return (
-    <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+    <div style={{ background: "#fff", minHeight: "100vh" }}>
       <PubNav nav={nav} active="Berita" />
-      <PubHero eyebrow="BERITA & ARTIKEL" title="Kabar & Cerita dari Kampus" desc="Ikuti perkembangan terbaru seputar prestasi, riset, kerjasama, dan kehidupan akademik Institut Teknologi Indonesia." kicker={search} />
+      <PubHero eyebrow="BERITA & ARTIKEL" title="Kabar & Cerita dari Kampus" desc="Ikuti perkembangan terbaru seputar prestasi, riset, kerjasama, dan kehidupan akademik universitas." kicker={search} />
 
       <section style={{ maxWidth: 1200, margin: "0 auto", padding: "36px 40px 72px" }}>
         {/* Filter chips */}
@@ -169,7 +146,7 @@ function BeritaIndex({ nav }) {
               <p style={{ fontSize: 14.5, opacity: .82, margin: "0 0 14px", lineHeight: 1.55, maxWidth: 620 }}>{featured.ringkas}</p>
               <div style={{ display: "flex", gap: 16, alignItems: "center", fontSize: 12.5, opacity: .72 }}>
                 <span>{featured.tgl}</span><span>·</span><span>{featured.baca} mnt baca</span><span>·</span><span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon name="eye" size={14} /> {featured.views.toLocaleString("id")}</span>
-                <span style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 6, fontWeight: 800, color: "var(--orange)" }}>Baca <Icon name="arrowR" size={15} /></span>
+                <span style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 6, fontWeight: 800, color: "#ea9f5a" }}>Baca <Icon name="arrowR" size={15} /></span>
               </div>
             </div>
           </div>
@@ -212,7 +189,7 @@ function BeritaDetail({ id, nav }) {
   const next = C.berita[idx + 1];
 
   return (
-    <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+    <div style={{ background: "#fff", minHeight: "100vh" }}>
       <PubNav nav={nav} active="Berita" />
 
       {/* Hero image */}
@@ -298,7 +275,7 @@ function BeritaDetail({ id, nav }) {
               ))}
             </div>
           </div>
-          <div style={{ background: "linear-gradient(135deg, var(--orange-50), var(--surface))", borderRadius: 16, padding: 20 }}>
+          <div style={{ background: "linear-gradient(135deg, var(--orange-50), #fff8f0)", borderRadius: 16, padding: 20 }}>
             <div style={{ fontWeight: 800, fontSize: 14.5, marginBottom: 6 }}>Ingin kabar terbaru?</div>
             <div style={{ fontSize: 12.5, color: "var(--ink-2)", marginBottom: 12, lineHeight: 1.5 }}>Masuk ke portal untuk notifikasi & layanan akademik lengkap.</div>
             <button className="btn btn-primary btn-sm" style={{ width: "100%" }} onClick={nav.login}><Icon name="user" size={14} /> Portal Akademik</button>
@@ -361,7 +338,7 @@ function EventIndex({ nav }) {
   };
 
   return (
-    <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+    <div style={{ background: "#fff", minHeight: "100vh" }}>
       <PubNav nav={nav} active="Agenda" />
       <PubHero eyebrow="AGENDA & KEGIATAN" title="Agenda Kampus" desc="Seminar, workshop, kompetisi, hingga acara seremonial — temukan dan ikuti kegiatan yang akan datang." kicker={search} />
 
@@ -411,7 +388,7 @@ function EventDetail({ id, nav }) {
   const [reg, setReg] = useState(false);
 
   return (
-    <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+    <div style={{ background: "#fff", minHeight: "100vh" }}>
       <PubNav nav={nav} active="Agenda" />
 
       {/* Hero */}
@@ -536,4 +513,4 @@ function EventDetail({ id, nav }) {
   );
 }
 
-export { PubNav, PubFooter, PubHero, Chip, BeritaIndex, BeritaDetail, EventIndex, EventDetail };
+Object.assign(window, { BeritaIndex, BeritaDetail, EventIndex, EventDetail });

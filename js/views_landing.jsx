@@ -1,31 +1,18 @@
-/* eslint-disable */
-// @ts-nocheck
-// Generated from js/views_landing.jsx by scripts/port-js-ssot.mjs.
-"use client";
-
-
-import * as React from "react";
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Badge, Barcode, BrandLogo, Icon, ImgPlaceholder } from "@/components/atoms";
-import { Modal, PageHead } from "@/components/molecules";
-import { useToast } from "@/components/organisms";
-import { AIS_CONTENT } from "@/data/content";
-import { AIS_ERD } from "@/data/erd";
-import { AIS_EXP } from "@/data/exp";
-import { AIS_ROLES } from "@/data/roles";
-import { AIS_DATA } from "@/data/mock-data";
-import { PUBLIC_PRODI } from "@/data/public-academic";
-import { initials, rupiah } from "@/lib/format";
-import { useSharedList } from "@/lib/sharedStore";
-
-const window = { AIS_CONTENT, AIS_DATA, AIS_ERD, AIS_EXP, AIS_ROLES } as any;
-
 // ============================================================
-// SIAKAD ITI — Landing Page Institut Teknologi Indonesia
+// AIS — Landing Page Universitas (gaya website kampus)
 // Hero, Program Studi, Berita, Event, Banner, Statistik, Footer
 // ============================================================
 
-const PRODI_LIST = PUBLIC_PRODI.map((p) => ({ ...p, mhs: p.mahasiswa }));
+const PRODI_LIST = [
+  { nama: "Teknik Informatika", fakultas: "Sains & Teknologi", akreditasi: "Unggul", jenjang: "S1", mhs: 642, icon: "server" },
+  { nama: "Sistem Informasi", fakultas: "Sains & Teknologi", akreditasi: "Baik Sekali", jenjang: "S1", mhs: 588, icon: "database" },
+  { nama: "Teknik Elektro", fakultas: "Sains & Teknologi", akreditasi: "Baik Sekali", jenjang: "S1", mhs: 414, icon: "activity" },
+  { nama: "Ekonomi Syariah", fakultas: "Ekonomi & Bisnis Islam", akreditasi: "Unggul", jenjang: "S1", mhs: 702, icon: "chart" },
+  { nama: "Manajemen", fakultas: "Ekonomi & Bisnis Islam", akreditasi: "Baik Sekali", jenjang: "S1", mhs: 560, icon: "briefcase" },
+  { nama: "Ilmu Hukum", fakultas: "Ilmu Sosial & Politik", akreditasi: "Baik Sekali", jenjang: "S1", mhs: 480, icon: "scale" },
+  { nama: "Pendidikan Agama Islam", fakultas: "Agama Islam", akreditasi: "Unggul", jenjang: "S1", mhs: 520, icon: "book" },
+  { nama: "Kedokteran Umum", fakultas: "Kedokteran & Kesehatan", akreditasi: "Baik Sekali", jenjang: "S1", mhs: 310, icon: "heart" },
+];
 
 const PENGUMUMAN = [
   "Pendaftaran wisuda periode II dibuka hingga 10 Juli 2026",
@@ -46,44 +33,42 @@ function Landing({ onLogin, onModul, nav }) {
 
   // ---------- Navbar ----------
   const navbar = (
-    <nav className="ld-nav" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "var(--topbar-bg)", backdropFilter: "blur(18px)", borderBottom: "1px solid var(--line)", display: "flex", alignItems: "center", padding: "0 32px", height: 62, gap: 10 }}>
-      <div className="ld-brand" style={{ display: "flex", alignItems: "center", gap: 12, marginRight: 32 }}>
-        <BrandLogo size={38} priority />
-        <div className="ld-brand-text"><b style={{ fontSize: 15.5, fontWeight: 800, display: "block", lineHeight: 1.1, letterSpacing: 0 }}>Institut Teknologi Indonesia</b><span style={{ fontSize: 10.5, color: "var(--ink-3)", fontWeight: 600, letterSpacing: ".03em" }}>SISTEM INFORMASI AKADEMIK</span></div>
+    <nav className="ld-nav" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(255,255,255,.92)", backdropFilter: "blur(18px)", borderBottom: "1px solid var(--line)", display: "flex", alignItems: "center", padding: "0 32px", height: 62, gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginRight: 32 }}>
+        <div style={{ width: 38, height: 38, borderRadius: 11, background: "linear-gradient(135deg,var(--orange),#e89b5a)", color: "#fff", display: "grid", placeItems: "center", fontWeight: 800, fontSize: 17 }}>U</div>
+        <div><b style={{ fontSize: 15.5, fontWeight: 800, display: "block", lineHeight: 1.1, letterSpacing: "-.02em" }}>Universitas</b><span style={{ fontSize: 10.5, color: "var(--ink-3)", fontWeight: 600, letterSpacing: ".03em" }}>AKADEMIK INFORMASI SISTEM</span></div>
       </div>
       <div className="ld-nav-links" style={{ display: "flex", gap: 6, flex: 1 }}>
-        {["Beranda", "Program Studi", "Kalender Akademik", "Berita", "Agenda", "Tentang"].map((l) => (
-          <button className="ld-nav-link" key={l} style={{ border: "none", background: "none", padding: "8px 14px", fontSize: 13.5, fontWeight: 600, color: "var(--ink-2)", cursor: "pointer", borderRadius: 10, fontFamily: "var(--sans)" }}
-            onClick={() => { if (l === "Program Studi") return go.programStudi ? go.programStudi() : document.getElementById("prodi")?.scrollIntoView({ behavior: "smooth" }); if (l === "Kalender Akademik") return go.kalender?.(); if (l === "Berita") return go.berita?.(); if (l === "Agenda") return go.events?.(); const id = l === "Tentang" ? "tentang" : "hero"; document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); }}>{l}</button>
+        {["Beranda", "Program Studi", "Berita", "Agenda", "Tentang"].map((l) => (
+          <button key={l} style={{ border: "none", background: "none", padding: "8px 14px", fontSize: 13.5, fontWeight: 600, color: "var(--ink-2)", cursor: "pointer", borderRadius: 10, fontFamily: "var(--sans)" }}
+            onClick={() => { if (l === "Berita") return go.berita(); if (l === "Agenda") return go.events(); const id = l === "Program Studi" ? "prodi" : l === "Tentang" ? "tentang" : "hero"; document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); }}>{l}</button>
         ))}
       </div>
-      <div className="ld-nav-actions">
-        <button className="btn btn-ghost btn-sm ld-lang" style={{ marginRight: 6 }}>EN</button>
-        <button className="btn btn-primary ld-portal" onClick={onLogin}><Icon name="user" size={15} /> <span>Portal Akademik</span></button>
-      </div>
+      <button className="btn btn-ghost btn-sm" style={{ marginRight: 6 }}>EN</button>
+      <button className="btn btn-primary" onClick={onLogin}><Icon name="user" size={15} /> Portal Akademik</button>
     </nav>
   );
 
   // ---------- Hero ----------
   const hero = (
-    <section id="hero" className="ld-hero" style={{ minHeight: "90vh", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden", padding: "120px 48px 80px" }}>
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #17110c 0%, #3a2518 48%, #0f172a 100%)", zIndex: 0 }} />
-      <div style={{ position: "absolute", right: "-8%", top: "-15%", width: "55%", aspectRatio: "1", borderRadius: "50%", background: "radial-gradient(circle, rgba(217,126,52,.2) 0%, transparent 70%)", zIndex: 0 }} />
+    <section id="hero" style={{ minHeight: "90vh", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden", padding: "120px 48px 80px" }}>
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)", zIndex: 0 }} />
+      <div style={{ position: "absolute", right: "-8%", top: "-15%", width: "55%", aspectRatio: "1", borderRadius: "50%", background: "radial-gradient(circle, rgba(234,159,90,.18) 0%, transparent 70%)", zIndex: 0 }} />
       <div style={{ position: "absolute", left: "-5%", bottom: "-20%", width: "40%", aspectRatio: "1", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,125,210,.12) 0%, transparent 70%)", zIndex: 0 }} />
       <div style={{ position: "relative", zIndex: 1, maxWidth: 720 }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px", background: "rgba(255,255,255,.1)", borderRadius: 8, fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,.8)", marginBottom: 22, border: "1px solid rgba(255,255,255,.1)" }}>
           <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#34d399" }} /> Pendaftaran 2026/2027 Dibuka
         </div>
-        <h1 style={{ fontSize: 52, fontWeight: 900, lineHeight: 1.08, letterSpacing: 0, color: "#fff", margin: "0 0 18px" }}>Kuliah di <span style={{ color: "var(--orange)" }}>Institut Teknologi Indonesia</span></h1>
-        <p style={{ fontSize: 17.5, lineHeight: 1.65, color: "rgba(255,255,255,.72)", margin: "0 0 32px", maxWidth: 600 }}>Kampus teknologi di bawah Yayasan Pengembangan Teknologi Indonesia dengan 10 program studi dan layanan akademik digital terpadu.</p>
+        <h1 style={{ fontSize: 52, fontWeight: 900, lineHeight: 1.08, letterSpacing: "-.03em", color: "#fff", margin: "0 0 18px" }}>Membangun Generasi <span style={{ color: "#ea9f5a" }}>Unggul</span> &amp; Berkarakter</h1>
+        <p style={{ fontSize: 17.5, lineHeight: 1.65, color: "rgba(255,255,255,.72)", margin: "0 0 32px", maxWidth: 560 }}>Universitas terakreditasi Unggul dengan 8 program studi, 412 dosen, dan 12.480 mahasiswa aktif. Bergabunglah bersama kami.</p>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <button className="btn btn-primary" style={{ padding: "14px 28px", fontSize: 15 }} onClick={onLogin}><Icon name="user" size={17} /> Portal Akademik</button>
           <button className="btn" style={{ padding: "14px 28px", fontSize: 15, background: "rgba(255,255,255,.12)", color: "#fff", border: "1px solid rgba(255,255,255,.2)" }} onClick={() => document.getElementById("prodi")?.scrollIntoView({ behavior: "smooth" })}>Jelajahi Program Studi</button>
         </div>
       </div>
       <div className="ld-hero-stats" style={{ position: "relative", zIndex: 1, display: "flex", gap: 32, marginTop: 64, flexWrap: "wrap" }}>
-        {[["10", "Program Studi"], ["453", "Modul Akademik"], ["34", "Layanan Digital"], ["YPTI", "Yayasan Pengelola"]].map(([v, l]) => (
-          <div key={l}><div style={{ fontSize: 30, fontWeight: 900, color: "var(--orange)", fontFamily: "var(--mono)" }}>{v}</div><div style={{ fontSize: 12.5, color: "rgba(255,255,255,.55)", fontWeight: 600, marginTop: 2 }}>{l}</div></div>
+        {[["12.480", "Mahasiswa Aktif"], ["412", "Dosen & Tendik"], ["8", "Program Studi"], ["34", "Layanan Digital"]].map(([v, l]) => (
+          <div key={l}><div style={{ fontSize: 30, fontWeight: 900, color: "#ea9f5a", fontFamily: "var(--mono)" }}>{v}</div><div style={{ fontSize: 12.5, color: "rgba(255,255,255,.55)", fontWeight: 600, marginTop: 2 }}>{l}</div></div>
         ))}
       </div>
     </section>
@@ -107,12 +92,11 @@ function Landing({ onLogin, onModul, nav }) {
       <div style={{ textAlign: "center", marginBottom: 40 }}>
         <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--orange-600)", marginBottom: 8 }}>PROGRAM STUDI</div>
         <h2 style={{ fontSize: 34, fontWeight: 900, letterSpacing: "-.025em", margin: "0 0 10px" }}>Pilihan Studi yang Tepat untuk Masa Depan</h2>
-        <p style={{ color: "var(--ink-2)", fontSize: 15, maxWidth: 600, margin: "0 auto" }}>10 program studi ITI untuk bidang rekayasa, teknologi, perencanaan, industri, dan manajemen.</p>
+        <p style={{ color: "var(--ink-2)", fontSize: 15, maxWidth: 560, margin: "0 auto" }}>8 program studi terakreditasi dari 5 fakultas — mencetak lulusan siap kerja dan berkarakter.</p>
       </div>
       <div className="ld-grid ld-grid-prodi" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: 16 }}>
         {PRODI_LIST.map((p) => (
-          <div key={p.nama} style={{ border: "1px solid var(--line)", borderRadius: 16, padding: 22, display: "flex", flexDirection: "column", gap: 12, transition: "box-shadow .2s", cursor: "pointer" }}
-            onClick={() => go.programStudi?.(p.slug)}
+          <div key={p.nama} style={{ border: "1px solid var(--line)", borderRadius: 16, padding: 22, display: "flex", flexDirection: "column", gap: 12, transition: "box-shadow .2s", cursor: "default" }}
             onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 8px 28px rgba(0,0,0,.08)"}
             onMouseLeave={(e) => e.currentTarget.style.boxShadow = "none"}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -127,7 +111,6 @@ function Landing({ onLogin, onModul, nav }) {
               <Badge tone="gray">{p.jenjang}</Badge>
               <span style={{ fontSize: 12, color: "var(--ink-3)", marginLeft: "auto" }}>{p.mhs} mhs</span>
             </div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--orange-600)", fontSize: 12.5, fontWeight: 800 }}>Lihat detail <Icon name="arrowR" size={14} /></div>
           </div>
         ))}
       </div>
@@ -212,20 +195,20 @@ function Landing({ onLogin, onModul, nav }) {
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div className="ld-tentang" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }}>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--orange)", marginBottom: 8 }}>MENGAPA ITI</div>
-            <h2 style={{ fontSize: 30, fontWeight: 900, letterSpacing: 0, margin: "0 0 16px" }}>Kampus Teknologi Berbasis Entrepreneur</h2>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: "rgba(255,255,255,.65)", margin: "0 0 28px" }}>SIAKAD ITI menyatukan layanan akademik, PMB, MBKM, riset, keuangan, dan administrasi kampus dalam satu pengalaman digital resmi.</p>
+            <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: "#ea9f5a", marginBottom: 8 }}>MENGAPA KAMI</div>
+            <h2 style={{ fontSize: 30, fontWeight: 900, letterSpacing: "-.025em", margin: "0 0 16px" }}>Universitas Terakreditasi Unggul</h2>
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: "rgba(255,255,255,.65)", margin: "0 0 28px" }}>Dengan sejarah lebih dari 6 dekade, kami terus berinovasi dalam pendidikan, penelitian, dan pengabdian masyarakat. Infrastruktur digital terdepan mendukung 34 layanan terintegrasi.</p>
             <div className="ld-tentang-feat" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               {[["Akreditasi Unggul", "BAN-PT 2026", "award"], ["34 Microservice", "Infrastruktur cloud-native", "server"], ["Kerjasama Global", "5 negara mitra riset", "link"], ["96% Serapan Lulusan", "Masa tunggu < 3 bulan", "userCheck"]].map(([t, s, ic]) => (
                 <div key={t} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                  <div style={{ width: 38, height: 38, borderRadius: 11, background: "rgba(217,126,52,.15)", color: "var(--orange)", display: "grid", placeItems: "center", flexShrink: 0 }}><Icon name={ic} size={18} /></div>
+                  <div style={{ width: 38, height: 38, borderRadius: 11, background: "rgba(234,159,90,.15)", color: "#ea9f5a", display: "grid", placeItems: "center", flexShrink: 0 }}><Icon name={ic} size={18} /></div>
                   <div><div style={{ fontWeight: 800, fontSize: 13.5 }}>{t}</div><div style={{ fontSize: 11.5, color: "rgba(255,255,255,.45)" }}>{s}</div></div>
                 </div>
               ))}
             </div>
           </div>
           <div className="ld-tentang-gauge" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-            {[["var(--blue)", "78%", "Kelulusan Tepat Waktu"], ["var(--green)", "84%", "Kepuasan Layanan"], ["var(--purple)", "71%", "Realisasi Renstra"], ["var(--orange)", "96%", "Serapan Lulusan"]].map(([c, v, l]) => (
+            {[["var(--blue)", "78%", "Kelulusan Tepat Waktu"], ["var(--green)", "84%", "Kepuasan Layanan"], ["var(--purple)", "71%", "Realisasi Renstra"], ["#ea9f5a", "96%", "Serapan Lulusan"]].map(([c, v, l]) => (
               <div key={l} style={{ background: "rgba(255,255,255,.06)", borderRadius: 16, padding: 22, textAlign: "center", border: "1px solid rgba(255,255,255,.08)" }}>
                 <div style={{ width: 78, height: 78, borderRadius: "50%", background: `conic-gradient(${c} ${parseFloat(v) * 3.6}deg, rgba(255,255,255,.08) 0deg)`, display: "grid", placeItems: "center", margin: "0 auto 12px" }}>
                   <div style={{ width: 58, height: 58, borderRadius: "50%", background: "#0f172a", display: "grid", placeItems: "center" }}>
@@ -243,13 +226,12 @@ function Landing({ onLogin, onModul, nav }) {
 
   // ---------- CTA ----------
   const cta = (
-    <section className="ld-cta" style={{ padding: "64px 40px", textAlign: "center", background: "linear-gradient(135deg, var(--orange-50), var(--surface))" }}>
-      <h2 style={{ fontSize: 28, fontWeight: 900, letterSpacing: 0, margin: "0 0 10px" }}>Siap Bergabung dengan ITI?</h2>
-      <p style={{ color: "var(--ink-2)", fontSize: 15, margin: "0 0 24px" }}>Daftarkan diri melalui portal PMB atau masuk ke Sistem Informasi Akademik ITI.</p>
+    <section className="ld-cta" style={{ padding: "64px 40px", textAlign: "center", background: "linear-gradient(135deg, var(--orange-50), #fff8f0)" }}>
+      <h2 style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-.02em", margin: "0 0 10px" }}>Siap Bergabung?</h2>
+      <p style={{ color: "var(--ink-2)", fontSize: 15, margin: "0 0 24px" }}>Daftarkan diri Anda melalui portal PMB atau masuk ke Sistem Informasi Akademik.</p>
       <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
         <button className="btn btn-primary" style={{ padding: "14px 28px", fontSize: 15 }} onClick={onLogin}><Icon name="user" size={17} /> Portal Akademik</button>
-        <button className="btn btn-ghost" style={{ padding: "14px 28px", fontSize: 15 }} onClick={() => go.programStudi ? go.programStudi() : document.getElementById("prodi")?.scrollIntoView({ behavior: "smooth" })}>Lihat Program Studi</button>
-        <button className="btn btn-ghost" style={{ padding: "14px 28px", fontSize: 15 }} onClick={() => go.kalender?.()}><Icon name="calendar" size={17} /> Kalender PMB</button>
+        <button className="btn btn-ghost" style={{ padding: "14px 28px", fontSize: 15 }} onClick={() => document.getElementById("prodi")?.scrollIntoView({ behavior: "smooth" })}>Lihat Program Studi</button>
       </div>
     </section>
   );
@@ -260,20 +242,21 @@ function Landing({ onLogin, onModul, nav }) {
       <div className="ld-footer" style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1.3fr 1fr 1fr 1fr", gap: 32 }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 14 }}>
-            <BrandLogo size={38} />
-            <b style={{ fontSize: 15, color: "#fff" }}>Institut Teknologi Indonesia</b>
+            <div style={{ width: 38, height: 38, borderRadius: 11, background: "linear-gradient(135deg,#ea9f5a,#e8b76a)", color: "#fff", display: "grid", placeItems: "center", fontWeight: 800, fontSize: 17 }}>U</div>
+            <b style={{ fontSize: 15, color: "#fff" }}>Universitas</b>
           </div>
-          <p style={{ fontSize: 13, lineHeight: 1.65, margin: 0 }}>Jl. Raya Puspiptek, Setu, Tangerang Selatan 15314<br />081360090013 · iti.ac.id</p>
+          <p style={{ fontSize: 13, lineHeight: 1.65, margin: 0 }}>Jl. Pendidikan No. 1, Kota Ilmu, Indonesia 12345<br />+62 21 1234 5678 · info@universitas.ac.id</p>
         </div>
         {[["Akademik", ["Kalender Akademik", "Kurikulum", "Perpustakaan", "Penelitian"]], ["Layanan", ["PMB Online", "Portal Mahasiswa", "E-Learning", "Tracer Study"]], ["Informasi", ["Berita", "Agenda", "PPID", "Karir & Alumni"]]].map(([title, items]) => (
           <div key={title}>
             <div style={{ fontWeight: 800, fontSize: 13, color: "#fff", marginBottom: 14 }}>{title}</div>
-            {items.map((it) => (<div key={it} style={{ fontSize: 13, marginBottom: 8, cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.color = "var(--orange)"} onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,.55)"}>{it}</div>))}
+            {items.map((it) => (<div key={it} style={{ fontSize: 13, marginBottom: 8, cursor: "pointer" }} onMouseEnter={(e) => e.currentTarget.style.color = "#ea9f5a"} onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,.55)"}>{it}</div>))}
           </div>
         ))}
       </div>
       <div style={{ maxWidth: 1200, margin: "28px auto 0", paddingTop: 20, borderTop: "1px solid rgba(255,255,255,.1)", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
-        <span>© 2026 Yayasan Pengembangan Teknologi Indonesia | Institut Teknologi Indonesia.</span>
+        <span>© 2026 Universitas. Seluruh hak dilindungi.</span>
+        <span>Ditenagai oleh <b style={{ color: "rgba(255,255,255,.7)" }}>AIS — 34 Microservice</b></span>
       </div>
     </footer>
   );
@@ -281,7 +264,7 @@ function Landing({ onLogin, onModul, nav }) {
   const newsModal = null;
 
   return (
-    <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+    <div style={{ background: "#fff", minHeight: "100vh" }}>
       {navbar}
       {hero}
       {ticker}
@@ -296,4 +279,4 @@ function Landing({ onLogin, onModul, nav }) {
   );
 }
 
-export { Landing };
+Object.assign(window, { Landing });
