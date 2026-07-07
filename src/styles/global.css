@@ -1,7 +1,9 @@
 :root {
+      color-scheme: light;
+
       /* Brand */
-      --orange: #d97734;
-      --orange-600: #c4651f;
+      --orange: #d97e34;
+      --orange-600: #c96d29;
       --orange-50: #fdf2e9;
       --orange-100: #fbe4d1;
 
@@ -14,6 +16,9 @@
       --ink-3: #9a8e80;
       --line: #ece2d5;
       --line-2: #e0d4c3;
+      --topbar-bg: rgba(250, 246, 240, .85);
+      --hero-surface: #ffffff;
+      --hero-border: var(--orange-100);
 
       /* Accents (friendly, same chroma family) */
       --green: #3f9e6d;
@@ -36,6 +41,41 @@
       --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
 
+    [data-theme="dark"] {
+      color-scheme: dark;
+
+      --orange: #d97e34;
+      --orange-600: #f0a35f;
+      --orange-50: #332114;
+      --orange-100: #4f311d;
+
+      --bg: #101216;
+      --surface: #171a20;
+      --surface-2: #20242c;
+      --ink: #f4efe8;
+      --ink-2: #c7bdb1;
+      --ink-3: #8f8378;
+      --line: #2a303a;
+      --line-2: #394150;
+      --topbar-bg: rgba(16, 18, 22, .86);
+      --hero-surface: #171a20;
+      --hero-border: #4b3424;
+
+      --green: #6bd39c;
+      --green-bg: #173526;
+      --blue: #78b7ff;
+      --blue-bg: #172b42;
+      --purple: #b99cff;
+      --purple-bg: #2b2141;
+      --red: #ff8c7c;
+      --red-bg: #3e1f1c;
+      --amber: #f4c761;
+      --amber-bg: #3a2d16;
+
+      --shadow: 0 1px 2px rgba(0, 0, 0, .18), 0 12px 28px rgba(0, 0, 0, .24);
+      --shadow-lg: 0 8px 18px rgba(0, 0, 0, .28), 0 28px 56px rgba(0, 0, 0, .34);
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -54,7 +94,7 @@
       text-rendering: optimizeLegibility;
     }
 
-    #root {
+    body {
       min-height: 100vh;
     }
 
@@ -129,13 +169,13 @@
       height: 42px;
       border-radius: 13px;
       flex-shrink: 0;
-      background: linear-gradient(135deg, var(--orange), #e89b5a);
+      background: linear-gradient(135deg, var(--orange), color-mix(in srgb, var(--orange) 72%, #fff));
       display: grid;
       place-items: center;
       color: #fff;
       font-weight: 800;
       font-size: 19px;
-      box-shadow: 0 4px 12px rgba(217, 119, 52, .35);
+      box-shadow: 0 4px 12px rgba(217, 126, 52, .35);
     }
 
     .sb-brand-text b {
@@ -280,7 +320,7 @@
     /* ---------- Topbar ---------- */
     .topbar {
       height: 70px;
-      background: rgba(250, 246, 240, .85);
+      background: var(--topbar-bg);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
       position: sticky;
@@ -1137,4 +1177,3 @@
         grid-template-columns: 1fr !important;
       }
     }
-  

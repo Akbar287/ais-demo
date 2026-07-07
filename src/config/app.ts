@@ -1,5 +1,7 @@
 export const APP_CONFIG = {
-  name: "AIS",
-  title: "AIS - Sistem Informasi Akademik",
+  name: "SIAKAD ITI",
+  institution: "Institut Teknologi Indonesia",
+  foundation: "Yayasan Pengembangan Teknologi Indonesia",
+  title: "SIAKAD ITI - Institut Teknologi Indonesia",
   locale: "id-ID",
 };

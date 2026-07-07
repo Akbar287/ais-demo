@@ -1,8 +1,11 @@
+/* eslint-disable */
 // @ts-nocheck
+// Generated from js/data.js by scripts/port-js-ssot.mjs.
+
 // ============================================================
 // AIS — Mock Data
 // ============================================================
-window.AIS_DATA = (function () {
+export const AIS_DATA = (function () {
   const mahasiswa = {
     nama: "Aisyah Nur Ramadhani",
     nim: "11210910000045",
@@ -179,7 +182,7 @@ window.AIS_DATA = (function () {
   // Beasiswa
   const beasiswa = [
     { id: "bs1", nama: "Beasiswa Bidikmisi / KIP-Kuliah", penyelenggara: "Kemendikbud", kuota: 50, deadline: "30 Jun 2026", nominal: "Rp 6.600.000 / semester", syarat: ["IPK minimal 3.00", "Tidak mampu secara ekonomi", "Surat Keterangan Tidak Mampu (SKTM)", "Aktif organisasi kampus"], status: "Dibuka" },
-    { id: "bs2", nama: "Beasiswa Prestasi Akademik", penyelenggara: "Universitas", kuota: 30, deadline: "15 Jul 2026", nominal: "Rp 5.000.000 / semester", syarat: ["IPK minimal 3.50", "Semester 3 ke atas", "Sertifikat prestasi", "Surat rekomendasi dosen PA"], status: "Dibuka" },
+    { id: "bs2", nama: "Beasiswa Prestasi Akademik", penyelenggara: "ITI", kuota: 30, deadline: "15 Jul 2026", nominal: "Rp 5.000.000 / semester", syarat: ["IPK minimal 3.50", "Semester 3 ke atas", "Sertifikat prestasi", "Surat rekomendasi dosen PA"], status: "Dibuka" },
     { id: "bs3", nama: "Beasiswa Tahfidz Al-Qur'an", penyelenggara: "Yayasan Mitra", kuota: 20, deadline: "10 Jul 2026", nominal: "Rp 4.500.000 / semester", syarat: ["Hafal minimal 10 juz", "IPK minimal 3.00", "Sertifikat tahfidz", "Tes hafalan"], status: "Dibuka" },
     { id: "bs4", nama: "Beasiswa Bank Indonesia (GenBI)", penyelenggara: "Bank Indonesia", kuota: 25, deadline: "01 Jun 2026", nominal: "Rp 1.000.000 / bulan", syarat: ["IPK minimal 3.00", "Semester 4-6", "Aktif organisasi", "Esai motivasi"], status: "Ditutup" },
   ];
@@ -240,5 +243,3 @@ window.AIS_DATA = (function () {
     riwayatSemester, pembayaran, jadwal, beasiswa, pengumuman, faq, sop, nilaiHuruf,
   };
 })();
-
-export {};

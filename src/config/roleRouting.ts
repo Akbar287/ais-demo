@@ -1,0 +1,4 @@
+import type { DemoRole } from "@/types/demo";
+import type { ViewId } from "./viewRegistry";
+
+export const HOME_VIEW_BY_ROLE = { mahasiswa: "dashboard", dosen: "dsn_dashboard", pa: "pa_dashboard", kaprodi: "prd_dashboard", keuangan: "keu_dashboard", admin: "adm_dashboard", pustakawan: "lib_dashboard", pmb: "pmb_dashboard", hr: "hr_dashboard", pengadaan: "pgd_dashboard", aset: "ast_dashboard", calon: "calon_dashboard", lppm: "lppm_dashboard", lpm: "lpm_dashboard", mbkm: "mbkm_dashboard", kkn: "kkn_dashboard", tu: "tu_dashboard", itsm: "itsm_dashboard", kemahasiswaan: "kmhs_dashboard", kerjasama: "ks_dashboard", humas: "hms_dashboard", bau: "bau_dashboard", dokumen: "dok_dashboard", workflow: "wf_dashboard", pimpinan: "pimp_dashboard", akuntansi: "akun_dashboard", baa: "baa_dashboard", pddikti: "fdrop_dashboard" } as const satisfies Record<DemoRole, ViewId>;

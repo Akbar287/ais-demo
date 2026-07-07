@@ -1,10 +1,13 @@
+/* eslint-disable */
 // @ts-nocheck
+// Generated from js/data_roles.js by scripts/port-js-ssot.mjs.
+
 // ============================================================
 // AIS — Data Multi-Role (RBAC), Microservices, Audit
 // Diturunkan dari System-Design.docx, Arsitektur-Microservices.xlsx,
 // ERD-Relasi-SIM.xlsx
 // ============================================================
-window.AIS_ROLES = (function () {
+export const AIS_ROLES = (function () {
   // ---------------- Persona per role ----------------
   const personas = {
     mahasiswa: { nama: "Aisyah Nur Ramadhani", id: "11210910000045", idLabel: "NIM", jabatan: "Mahasiswa S1 Teknik Informatika", unit: "Fakultas Sains dan Teknologi", ava: "var(--orange)", avaBg: "var(--orange-50)" },
@@ -31,6 +34,10 @@ window.AIS_ROLES = (function () {
     bau:       { nama: "Drs. Suparno", id: "1975112033", idLabel: "NIP", jabatan: "Kepala Bagian Umum & Rumah Tangga", unit: "Biro Administrasi Umum (BAU)", ava: "var(--amber)", avaBg: "var(--amber-bg)" },
     dokumen:   { nama: "Fitri Handayani, S.Kom", id: "1992073055", idLabel: "NIP", jabatan: "Pengelola Dokumen & TTE", unit: "PUSTIPANDA", ava: "var(--purple)", avaBg: "var(--purple-bg)" },
     workflow:  { nama: "Ir. Bambang Wijaya, M.M", id: "1972054088", idLabel: "NIP", jabatan: "Sekretaris Pelaksana (Approval Center)", unit: "Biro Administrasi Akademik", ava: "var(--blue)", avaBg: "var(--blue-bg)" },
+    pimpinan:  { nama: "Prof. Dr. H. Salman Alfarisi, M.A", id: "0005066002", idLabel: "NIDN", jabatan: "Rektor", unit: "Pimpinan ITI", ava: "var(--purple)", avaBg: "var(--purple-bg)" },
+    akuntansi: { nama: "Hesti Rahayu, S.E., M.Ak", id: "1988101522", idLabel: "NIP", jabatan: "Kepala Sub-bagian Akuntansi", unit: "Biro Keuangan", ava: "var(--green)", avaBg: "var(--green-bg)" },
+    baa:       { nama: "Siti Aminah, S.Kom", id: "1995080033", idLabel: "NIP", jabatan: "Operator Biro Administrasi Akademik", unit: "BAA", ava: "var(--blue)", avaBg: "var(--blue-bg)" },
+    pddikti:   { nama: "Agus Setiawan, S.Kom", id: "1991032077", idLabel: "NIP", jabatan: "Operator PDDikti / Neo Feeder", unit: "BAA · PUSTIPANDA", ava: "var(--orange)", avaBg: "var(--orange-50)" },
   };
 
   const roleMeta = {
@@ -58,6 +65,10 @@ window.AIS_ROLES = (function () {
     bau:       { label: "Umum & Rumah Tangga (BAU)", ic: "car", color: "var(--amber)", bg: "var(--amber-bg)", desc: "Kendaraan dinas, kebersihan, rumah tangga, dan keamanan.", svc: "General Affairs Service", cat: "Layanan & Operasional" },
     dokumen:   { label: "Dokumen & TTE", ic: "signature", color: "var(--purple)", bg: "var(--purple-bg)", desc: "Pusat dokumen, tanda tangan elektronik, dan verifikasi QR.", svc: "Document & E-Signature", cat: "Platform & Sistem" },
     workflow:  { label: "Workflow & Persetujuan", ic: "workflow", color: "var(--blue)", bg: "var(--blue-bg)", desc: "Kotak masuk persetujuan terpusat untuk proses lintas modul.", svc: "Workflow & Approval", cat: "Platform & Sistem" },
+    pimpinan:  { label: "Pimpinan (Eksekutif)", ic: "building", color: "var(--purple)", bg: "var(--purple-bg)", desc: "Dashboard eksekutif lintas unit: akademik, keuangan, SDM, mutu.", svc: "BI / Read Model", cat: "Akademik" },
+    akuntansi: { label: "Akuntansi", ic: "scale", color: "var(--green)", bg: "var(--green-bg)", desc: "Jurnal umum, buku besar, realisasi anggaran, tutup buku.", svc: "Accounting & Budget", cat: "Layanan & Operasional" },
+    baa:       { label: "Operator BAA", ic: "userCheck", color: "var(--blue)", bg: "var(--blue-bg)", desc: "Kalender akademik, layanan status mahasiswa (cuti/aktif/pindah).", svc: "Student Status · Reference", cat: "Akademik" },
+    pddikti:   { label: "Operator PDDikti", ic: "report", color: "var(--orange-600)", bg: "var(--orange-50)", desc: "Sinkronisasi Neo Feeder, validasi & perbaikan record tolakan.", svc: "PDDikti Feeder Service", cat: "Platform & Sistem" },
   };
 
   // ---------------- Navigasi per role (menu yang dapat dibuka) ----------------
@@ -70,7 +81,16 @@ window.AIS_ROLES = (function () {
         { id: "lms", label: "Ruang Belajar", ic: "bookOpen" },
         { id: "kehadiran", label: "Perkuliahan", ic: "presentation" },
         { id: "nilai", label: "Penilaian", ic: "award" },
+        { id: "mhs_ta", label: "Tugas Akhir", ic: "doc" },
         { id: "kalender", label: "Kalender", ic: "calendar" },
+      ]},
+      { group: "Evaluasi & Layanan", items: [
+        { id: "mhs_edom", label: "EDOM (Evaluasi Dosen)", ic: "star", badge: "2" },
+        { id: "mhs_banding", label: "Sanggah & Banding Nilai", ic: "scale" },
+        { id: "mhs_layanan", label: "Layanan Status Studi", ic: "userCheck" },
+      ]},
+      { group: "MBKM & Karier", items: [
+        { id: "mhs_exp", label: "MBKM, PKL & KKN", ic: "link", badge: "New" },
       ]},
       { group: "Keuangan & Layanan", items: [
         { id: "pembayaran", label: "Pembayaran", ic: "wallet" },
@@ -95,7 +115,15 @@ window.AIS_ROLES = (function () {
       { group: "Bimbingan", items: [
         { id: "dsn_ta", label: "Bimbingan Tugas Akhir", ic: "doc" },
       ]},
-      { group: "Akun", items: [
+      { group: "Evaluasi & Kinerja", items: [
+        { id: "dsn_banding", label: "Sanggah Nilai Masuk", ic: "scale", badge: "2" },
+        { id: "dsn_edom", label: "Hasil EDOM Saya", ic: "star" },
+        { id: "dsn_bkd", label: "BKD & Kinerja", ic: "report" },
+      ]},
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil Dosen", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -106,6 +134,7 @@ window.AIS_ROLES = (function () {
         { id: "pa_validasi", label: "Validasi KRS", ic: "check", badge: "8" },
         { id: "pa_mahasiswa", label: "Mahasiswa Bimbingan", ic: "users" },
         { id: "pa_monitoring", label: "Monitoring Akademik", ic: "chart" },
+        { id: "pa_perwalian", label: "Riwayat Perwalian", ic: "clock" },
       ]},
       { group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
@@ -123,11 +152,19 @@ window.AIS_ROLES = (function () {
         { id: "prd_mahasiswa", label: "Data Mahasiswa", ic: "users" },
         { id: "prd_krs", label: "Rekap & Validasi KRS", ic: "check", badge: "Buka" },
         { id: "prd_nilai", label: "Rekap Nilai", ic: "award" },
+        { id: "prd_status", label: "Evaluasi & Status Studi", ic: "flag", badge: "3" },
+      ]},
+      { group: "Kelulusan", items: [
+        { id: "prd_ta", label: "Manajemen Tugas Akhir", ic: "doc" },
+        { id: "prd_yudisium", label: "Yudisium", ic: "grad" },
       ]},
       { group: "Pelaporan", items: [
         { id: "prd_feeder", label: "Pelaporan PDDikti", ic: "report" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -136,14 +173,19 @@ window.AIS_ROLES = (function () {
       { group: null, items: [{ id: "keu_dashboard", label: "Beranda", ic: "home" }] },
       { group: "Billing & Piutang", items: [
         { id: "keu_tagihan", label: "Tagihan & UKT", ic: "wallet" },
+        { id: "keu_ukt", label: "Master Tarif UKT", ic: "sliders" },
         { id: "keu_validasi", label: "Validasi Pembayaran", ic: "check", badge: "5" },
+        { id: "keu_gateway", label: "Payment Gateway", ic: "link" },
         { id: "keu_piutang", label: "Piutang Mahasiswa", ic: "chart" },
       ]},
       { group: "Layanan", items: [
         { id: "keu_beasiswa", label: "Pencairan Beasiswa", ic: "gift" },
         { id: "keu_laporan", label: "Laporan Keuangan", ic: "report" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -153,11 +195,19 @@ window.AIS_ROLES = (function () {
       { group: "Identity & Access (IAM)", items: [
         { id: "adm_users", label: "Manajemen Pengguna", ic: "users" },
         { id: "adm_rbac", label: "Peran & Hak Akses", ic: "key" },
+        { id: "adm_security", label: "Keamanan & Sesi", ic: "lock" },
+      ]},
+      { group: "Otomasi & Konfigurasi", items: [
+        { id: "adm_workflow", label: "Workflow Engine", ic: "workflow" },
+        { id: "adm_config", label: "Parameter & Penjadwalan", ic: "sliders" },
+        { id: "adm_notif", label: "Notifikasi", ic: "bell" },
+        { id: "adm_integration", label: "Integrasi & API", ic: "link" },
       ]},
       { group: "Platform", items: [
         { id: "adm_services", label: "Monitoring Microservice", ic: "server", badge: "34" },
         { id: "adm_erd", label: "Kamus Data & ERD", ic: "database", badge: "453" },
         { id: "adm_master", label: "Master Data & Referensi", ic: "sliders" },
+        { id: "adm_feeder", label: "Pelaporan PDDikti", ic: "report" },
         { id: "adm_audit", label: "Audit Log", ic: "report" },
       ]},
       { group: "Komunikasi", items: [
@@ -176,12 +226,16 @@ window.AIS_ROLES = (function () {
       ]},
       { group: "Keanggotaan", items: [
         { id: "lib_anggota", label: "Anggota", ic: "users" },
+        { id: "lib_reservasi", label: "Reservasi Buku", ic: "bell", badge: "1" },
         { id: "lib_denda", label: "Denda & Sanksi", ic: "wallet" },
       ]},
       { group: "Repositori", items: [
         { id: "lib_repo", label: "Repositori Karya Ilmiah", ic: "doc" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -196,7 +250,10 @@ window.AIS_ROLES = (function () {
       { group: "Registrasi", items: [
         { id: "pmb_daftarulang", label: "Daftar Ulang", ic: "check" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -205,15 +262,25 @@ window.AIS_ROLES = (function () {
       { group: null, items: [{ id: "hr_dashboard", label: "Beranda", ic: "home" }] },
       { group: "Kepegawaian", items: [
         { id: "hr_pegawai", label: "Data Pegawai", ic: "idcard" },
+        { id: "hr_kontrak", label: "Kontrak & Penugasan", ic: "doc", badge: "2" },
+        { id: "hr_karir", label: "Jabatan & Kepangkatan", ic: "chart" },
         { id: "hr_kehadiran", label: "Kehadiran & Cuti", ic: "check", badge: "7" },
+      ]},
+      { group: "Dosen", items: [
+        { id: "hr_dosen", label: "SISTER, JAFA, Serdos & BKD", ic: "award" },
+      ]},
+      { group: "Rekrutmen & Kinerja", items: [
+        { id: "hr_rekrutmen", label: "Rekrutmen", ic: "userCheck", badge: "3" },
+        { id: "hr_kinerja", label: "Kinerja & Pengembangan", ic: "target" },
       ]},
       { group: "Remunerasi", items: [
         { id: "hr_payroll", label: "Penggajian", ic: "wallet" },
+        { id: "hr_sejahtera", label: "Kesejahteraan", ic: "gift" },
       ]},
-      { group: "Pengembangan", items: [
-        { id: "hr_karir", label: "Jabatan & Kepangkatan", ic: "chart" },
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
       ]},
-      { group: "Akun", items: [
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -234,12 +301,26 @@ window.AIS_ROLES = (function () {
     ],
     aset: [
       { group: null, items: [{ id: "ast_dashboard", label: "Beranda", ic: "home" }] },
-      { group: "Aset (BMN)", items: [
-        { id: "ast_inventaris", label: "Inventaris Aset", ic: "box" },
-        { id: "ast_pemeliharaan", label: "Pemeliharaan", ic: "wrench", badge: "5" },
+      { group: "Aset Tetap (BMN)", items: [
+        { id: "ast_inventaris", label: "Data Induk Aset", ic: "box" },
+        { id: "ast_penyusutan", label: "Penyusutan", ic: "chart" },
+        { id: "ast_penghapusan", label: "Penghapusan", ic: "trash", badge: "1" },
       ]},
-      { group: "Fasilitas", items: [
-        { id: "ast_ruang", label: "Ruang & Fasilitas", ic: "building" },
+      { group: "Master & Label", items: [
+        { id: "ast_kategori", label: "Kategori Aset", ic: "sliders" },
+        { id: "ast_lokasi", label: "Lokasi & Gedung", ic: "building" },
+        { id: "ast_label", label: "Label & Barcode", ic: "idcard" },
+      ]},
+      { group: "Operasional", items: [
+        { id: "ast_pemeliharaan", label: "Pemeliharaan", ic: "wrench", badge: "5" },
+        { id: "ast_mutasi", label: "Mutasi / Transfer", ic: "link", badge: "1" },
+        { id: "ast_opname", label: "Stock Opname", ic: "check" },
+        { id: "ast_ruang", label: "Booking Fasilitas", ic: "calendar", badge: "1" },
+      ]},
+      { group: "Persediaan (BHP)", items: [
+        { id: "ast_bhp", label: "Barang Habis Pakai", ic: "box", badge: "2" },
+        { id: "ast_permintaan", label: "Permintaan Barang", ic: "doc", badge: "2" },
+        { id: "ast_distribusi", label: "Distribusi Barang", ic: "cart" },
       ]},
       { group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
@@ -249,6 +330,7 @@ window.AIS_ROLES = (function () {
     calon: [
       { group: null, items: [{ id: "calon_dashboard", label: "Beranda", ic: "home" }] },
       { group: "Seleksi Masuk", items: [
+        { id: "calon_daftar", label: "Pendaftaran & Berkas", ic: "doc", badge: "1" },
         { id: "calon_kartu", label: "Kartu Ujian", ic: "idcard" },
         { id: "calon_tes", label: "Ujian Masuk (CBT)", ic: "clipboard", badge: "Mulai" },
         { id: "calon_hasil", label: "Hasil Seleksi", ic: "award" },
@@ -266,20 +348,35 @@ window.AIS_ROLES = (function () {
         { id: "lppm_luaran", label: "Luaran & Publikasi", ic: "beaker" },
         { id: "lppm_hki", label: "HKI & Paten", ic: "award" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
     ],
     lpm: [
       { group: null, items: [{ id: "lpm_dashboard", label: "Beranda", ic: "home" }] },
-      { group: "Penjaminan Mutu", items: [
-        { id: "lpm_audit", label: "Audit Mutu Internal", ic: "check", badge: "3" },
-        { id: "lpm_akreditasi", label: "Akreditasi", ic: "shield" },
-        { id: "lpm_temuan", label: "Temuan & Tindak Lanjut", ic: "flag" },
+      { group: "SPMI", items: [
         { id: "lpm_standar", label: "Standar Mutu", ic: "target" },
+        { id: "lpm_audit", label: "Audit Mutu Internal", ic: "check", badge: "3" },
+        { id: "lpm_temuan", label: "Temuan & Tindak Lanjut", ic: "flag" },
+        { id: "lpm_sasaran", label: "Sasaran & Capaian Mutu", ic: "chart" },
       ]},
-      { group: "Akun", items: [
+      { group: "Akreditasi", items: [
+        { id: "lpm_akreditasi", label: "Akreditasi & LKPS", ic: "shield" },
+        { id: "lpm_asesmen", label: "Asesor & Asesmen", ic: "userCheck" },
+      ]},
+      { group: "Mutu & Risiko", items: [
+        { id: "lpm_survei", label: "Survei Kepuasan", ic: "star" },
+        { id: "lpm_dokumen", label: "Dokumen Mutu", ic: "doc" },
+        { id: "lpm_risiko", label: "Risiko & ISO", ic: "warn" },
+      ]},
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -292,7 +389,10 @@ window.AIS_ROLES = (function () {
         { id: "mbkm_konversi", label: "Konversi SKS", ic: "refresh" },
         { id: "mbkm_mitra", label: "Mitra", ic: "handshake" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -301,10 +401,14 @@ window.AIS_ROLES = (function () {
       { group: null, items: [{ id: "kkn_dashboard", label: "Beranda", ic: "home" }] },
       { group: "Penyelenggaraan KKN", items: [
         { id: "kkn_periode", label: "Periode & Lokasi", ic: "flag" },
+        { id: "kkn_pendaftar", label: "Pendaftar KKN", ic: "userCheck", badge: "1" },
         { id: "kkn_kelompok", label: "Kelompok & DPL", ic: "users" },
         { id: "kkn_penilaian", label: "Penilaian", ic: "award", badge: "4" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -317,7 +421,10 @@ window.AIS_ROLES = (function () {
         { id: "tu_disposisi", label: "Disposisi", ic: "check", badge: "3" },
         { id: "tu_arsip", label: "Arsip Digital", ic: "box" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -325,11 +432,19 @@ window.AIS_ROLES = (function () {
     itsm: [
       { group: null, items: [{ id: "itsm_dashboard", label: "Beranda", ic: "home" }] },
       { group: "Layanan TI", items: [
-        { id: "itsm_tiket", label: "Tiket Layanan", ic: "ticket", badge: "9" },
+        { id: "itsm_tiket", label: "Tiket Insiden", ic: "ticket", badge: "9" },
+        { id: "itsm_permintaan", label: "Katalog Permintaan", ic: "doc", badge: "2" },
         { id: "itsm_sla", label: "SLA & Kinerja", ic: "activity" },
         { id: "itsm_kb", label: "Basis Pengetahuan", ic: "bookOpen" },
       ]},
-      { group: "Akun", items: [
+      { group: "Aset & Perubahan", items: [
+        { id: "itsm_aset", label: "Aset TI & Lisensi", ic: "box" },
+        { id: "itsm_change", label: "Manajemen Perubahan", ic: "workflow", badge: "1" },
+      ]},
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -344,7 +459,10 @@ window.AIS_ROLES = (function () {
         { id: "kmhs_tracer", label: "Tracer Study & Alumni", ic: "userCheck" },
         { id: "kmhs_karir", label: "Pusat Karir", ic: "briefcase" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -355,7 +473,10 @@ window.AIS_ROLES = (function () {
         { id: "ks_mou", label: "MoU / MoA", ic: "handshake", badge: "1" },
         { id: "ks_mitra", label: "Mitra", ic: "building" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -363,11 +484,21 @@ window.AIS_ROLES = (function () {
     humas: [
       { group: null, items: [{ id: "hms_dashboard", label: "Beranda", ic: "home" }] },
       { group: "Informasi Publik", items: [
-        { id: "hms_berita", label: "Berita & Informasi", ic: "megaphone" },
+        { id: "hms_berita", label: "Berita & Artikel", ic: "megaphone" },
+        { id: "hms_event", label: "Agenda / Event", ic: "calendar" },
+        { id: "hms_kategori", label: "Kelola Kategori", ic: "tag" },
+        { id: "hms_pengumuman", label: "Pengumuman, Agenda & FAQ", ic: "bell" },
         { id: "hms_ppid", label: "Layanan PPID", ic: "doc" },
         { id: "hms_pengaduan", label: "Pengaduan & Aspirasi", ic: "bell", badge: "2" },
       ]},
-      { group: "Akun", items: [
+      { group: "Publikasi & Survei", items: [
+        { id: "hms_broadcast", label: "Broadcast & Kampanye", ic: "megaphone", badge: "1" },
+        { id: "hms_survei", label: "Survei Layanan", ic: "star" },
+      ]},
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -378,7 +509,10 @@ window.AIS_ROLES = (function () {
         { id: "bau_kendaraan", label: "Kendaraan Dinas", ic: "car", badge: "1" },
         { id: "bau_rt", label: "Rumah Tangga", ic: "home" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -390,7 +524,10 @@ window.AIS_ROLES = (function () {
         { id: "dok_tte", label: "Tanda Tangan Elektronik", ic: "signature", badge: "2" },
         { id: "dok_verifikasi", label: "Verifikasi QR", ic: "shield" },
       ]},
-      { group: "Akun", items: [
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
         { id: "bantuan", label: "Bantuan", ic: "help" },
       ]},
@@ -400,6 +537,82 @@ window.AIS_ROLES = (function () {
       { group: "Persetujuan", items: [
         { id: "wf_inbox", label: "Kotak Persetujuan", ic: "workflow", badge: "5" },
         { id: "wf_alur", label: "Definisi Alur", ic: "sliders" },
+      ]},
+      { group: "Akun", items: [
+        { id: "dsn_profil", label: "Profil", ic: "user" },
+        { id: "bantuan", label: "Bantuan", ic: "help" },
+      ]},
+    ],
+    pimpinan: [
+      { group: null, items: [{ id: "pimp_dashboard", label: "Dashboard Eksekutif", ic: "home" }] },
+      { group: "Monitor Domain", items: [
+        { id: "pimp_akademik", label: "Akademik", ic: "grad" },
+        { id: "pimp_keuangan", label: "Keuangan & Tata Kelola", ic: "wallet" },
+        { id: "pimp_riset", label: "Riset, PkM & Kemahasiswaan", ic: "beaker" },
+        { id: "pimp_mutu", label: "Mutu & Akreditasi", ic: "shield" },
+        { id: "pimp_sdm", label: "SDM & Kepegawaian", ic: "idcard" },
+      ]},
+      { group: "Keputusan & Lintas Sistem", items: [
+        { id: "pimp_persetujuan", label: "Kotak Persetujuan", ic: "workflow", badge: "5" },
+        { id: "pimp_search", label: "Pencarian Global", ic: "search" },
+      ]},
+      { group: "Akun", items: [
+        { id: "dsn_profil", label: "Profil", ic: "user" },
+        { id: "bantuan", label: "Bantuan", ic: "help" },
+      ]},
+    ],
+    akuntansi: [
+      { group: null, items: [{ id: "akun_dashboard", label: "Beranda", ic: "home" }] },
+      { group: "Jurnal & Buku Besar", items: [
+        { id: "akun_jurnal", label: "Jurnal Umum", ic: "scale", badge: "1" },
+        { id: "akun_coa", label: "Chart of Accounts", ic: "sliders" },
+        { id: "akun_gl", label: "Buku Besar", ic: "bookOpen" },
+      ]},
+      { group: "Rekonsiliasi", items: [
+        { id: "akun_rekon", label: "Rekonsiliasi GL", ic: "refresh" },
+      ]},
+      { group: "Belanja & Pencairan", items: [
+        { id: "akun_ap", label: "Belanja & Pencairan", ic: "wallet", badge: "3" },
+        { id: "akun_pajak", label: "Pajak & Kepatuhan", ic: "report" },
+      ]},
+      { group: "Anggaran & Pelaporan", items: [
+        { id: "akun_anggaran", label: "Anggaran (RKAT)", ic: "chart" },
+        { id: "akun_neraca", label: "Neraca Saldo", ic: "scale" },
+        { id: "akun_laporan", label: "Laporan Keuangan", ic: "report" },
+        { id: "akun_closing", label: "Tutup Buku", ic: "lock" },
+      ]},
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
+        { id: "dsn_profil", label: "Profil", ic: "user" },
+        { id: "bantuan", label: "Bantuan", ic: "help" },
+      ]},
+    ],
+    baa: [
+      { group: null, items: [{ id: "baa_dashboard", label: "Beranda", ic: "home" }] },
+      { group: "Administrasi Akademik", items: [
+        { id: "baa_kalender", label: "Kalender Akademik", ic: "calendar" },
+        { id: "baa_jadwal", label: "Penjadwalan Terpusat", ic: "calendar", badge: "1" },
+        { id: "baa_status", label: "Layanan Status Mhs", ic: "userCheck", badge: "2" },
+        { id: "prd_mahasiswa", label: "Data Mahasiswa", ic: "users" },
+      ]},
+      { group: "Nilai & Kelulusan", items: [
+        { id: "baa_nilai", label: "Kunci Nilai & Transkrip", ic: "award", badge: "2" },
+        { id: "baa_yudisium", label: "Yudisium & Ijazah", ic: "grad" },
+      ]},
+            { group: "Pengadaan & Aset", items: [
+        { id: "unit_pengadaan", label: "Ajukan Permintaan", ic: "cart" },
+      ]},
+{ group: "Akun", items: [
+        { id: "dsn_profil", label: "Profil", ic: "user" },
+        { id: "bantuan", label: "Bantuan", ic: "help" },
+      ]},
+    ],
+    pddikti: [
+      { group: null, items: [{ id: "fdrop_dashboard", label: "Beranda", ic: "home" }] },
+      { group: "Pelaporan", items: [
+        { id: "prd_feeder", label: "Sinkronisasi Feeder", ic: "refresh", badge: "71" },
       ]},
       { group: "Akun", items: [
         { id: "dsn_profil", label: "Profil", ic: "user" },
@@ -421,6 +634,13 @@ window.AIS_ROLES = (function () {
     // pa
     pa_dashboard: ["Penasihat Akademik", "Beranda"], pa_validasi: ["Perwalian", "Validasi KRS"],
     pa_mahasiswa: ["Perwalian", "Mahasiswa Bimbingan"], pa_monitoring: ["Perwalian", "Monitoring Akademik"],
+    pa_perwalian: ["Perwalian", "Riwayat Perwalian"],
+    // proses akademik tambahan
+    mhs_edom: ["Evaluasi", "EDOM — Evaluasi Dosen"], mhs_banding: ["Evaluasi", "Sanggah & Banding Nilai"],
+    mhs_layanan: ["Layanan", "Layanan Status Studi"], mhs_ta: ["Akademik", "Tugas Akhir Saya"],
+    calon_daftar: ["Seleksi Masuk", "Pendaftaran & Berkas"],
+    dsn_edom: ["Evaluasi & Kinerja", "Hasil EDOM Saya"], dsn_banding: ["Evaluasi & Kinerja", "Sanggah Nilai Masuk"], dsn_bkd: ["Evaluasi & Kinerja", "BKD & Kinerja"],
+    prd_ta: ["Kelulusan", "Manajemen Tugas Akhir"], prd_yudisium: ["Kelulusan", "Yudisium Prodi"], prd_status: ["Akademik", "Evaluasi & Status Studi"],
     // kaprodi
     prd_dashboard: ["Akademik Prodi", "Beranda"], prd_tawaran: ["Penyelenggaraan", "Penawaran Mata Kuliah"],
     prd_jadwal: ["Penyelenggaraan", "Penjadwalan Kelas"], prd_kurikulum: ["Penyelenggaraan", "Kurikulum & RPS"],
@@ -433,6 +653,9 @@ window.AIS_ROLES = (function () {
     // admin
     adm_dashboard: ["Administrator", "Beranda"], adm_users: ["IAM", "Manajemen Pengguna"],
     adm_rbac: ["IAM", "Peran & Hak Akses"], adm_services: ["Platform", "Monitoring Microservice"],
+    adm_security: ["IAM", "Keamanan & Sesi"], adm_workflow: ["Otomasi & Konfigurasi", "Workflow Engine"],
+    adm_config: ["Otomasi & Konfigurasi", "Parameter & Penjadwalan"], adm_notif: ["Otomasi & Konfigurasi", "Notifikasi"],
+    adm_integration: ["Otomasi & Konfigurasi", "Integrasi & API"], adm_feeder: ["Platform", "Pelaporan PDDikti"],
     adm_erd: ["Platform", "Kamus Data & ERD"],
     adm_master: ["Platform", "Master Data & Referensi"], adm_audit: ["Platform", "Audit Log"],
     adm_pengumuman: ["Komunikasi", "Pengumuman"],
@@ -443,19 +666,26 @@ window.AIS_ROLES = (function () {
     // perpustakaan
     lib_dashboard: ["Perpustakaan", "Beranda"], lib_sirkulasi: ["Sirkulasi", "Peminjaman & Pengembalian"],
     lib_katalog: ["Sirkulasi", "Katalog & Koleksi"], lib_anggota: ["Keanggotaan", "Anggota"],
+    lib_reservasi: ["Keanggotaan", "Reservasi Buku"],
     lib_denda: ["Keanggotaan", "Denda & Sanksi"], lib_repo: ["Repositori", "Karya Ilmiah"],
     // pmb
     pmb_dashboard: ["Panitia PMB", "Beranda"], pmb_pendaftar: ["Seleksi", "Pendaftar"],
     pmb_tes: ["Seleksi", "Jadwal & Tes"], pmb_hasil: ["Seleksi", "Penilaian & Hasil"], pmb_daftarulang: ["Registrasi", "Daftar Ulang"],
     // hr
     hr_dashboard: ["SDM", "Beranda"], hr_pegawai: ["Kepegawaian", "Data Pegawai"],
-    hr_kehadiran: ["Kepegawaian", "Kehadiran & Cuti"], hr_payroll: ["Remunerasi", "Penggajian"], hr_karir: ["Pengembangan", "Jabatan & Kepangkatan"],
+    hr_kehadiran: ["Kepegawaian", "Kehadiran & Cuti"], hr_payroll: ["Remunerasi", "Penggajian"], hr_karir: ["Kepegawaian", "Jabatan & Kepangkatan"],
+    hr_kontrak: ["Kepegawaian", "Kontrak & Penugasan"], hr_dosen: ["Dosen", "SISTER, JAFA, Serdos & BKD"],
+    hr_rekrutmen: ["Rekrutmen & Kinerja", "Rekrutmen Pegawai"], hr_kinerja: ["Rekrutmen & Kinerja", "Kinerja & Pengembangan"], hr_sejahtera: ["Remunerasi", "Kesejahteraan Pegawai"],
     // pengadaan
     pgd_dashboard: ["Pengadaan", "Beranda"], pgd_permintaan: ["Pengadaan", "Permintaan Pembelian"],
     pgd_po: ["Pengadaan", "Purchase Order"], pgd_vendor: ["Mitra", "Vendor / Rekanan"],
     // aset
-    ast_dashboard: ["Aset & Fasilitas", "Beranda"], ast_inventaris: ["Aset", "Inventaris Aset (BMN)"],
-    ast_pemeliharaan: ["Aset", "Pemeliharaan"], ast_ruang: ["Fasilitas", "Ruang & Fasilitas"],
+    ast_dashboard: ["Aset & Fasilitas", "Beranda"], ast_inventaris: ["Aset Tetap (BMN)", "Data Induk Aset"],
+    ast_penyusutan: ["Aset Tetap (BMN)", "Penyusutan"], ast_penghapusan: ["Aset Tetap (BMN)", "Penghapusan Aset"],
+    ast_kategori: ["Master & Label", "Kategori Aset"], ast_lokasi: ["Master & Label", "Lokasi & Gedung"], ast_label: ["Master & Label", "Label & Barcode"],
+    ast_pemeliharaan: ["Operasional", "Pemeliharaan"], ast_mutasi: ["Operasional", "Mutasi / Transfer Aset"], ast_opname: ["Operasional", "Stock Opname"], ast_ruang: ["Operasional", "Booking Fasilitas"],
+    ast_bhp: ["Persediaan (BHP)", "Barang Habis Pakai & Stok"], ast_permintaan: ["Persediaan (BHP)", "Permintaan Barang"], ast_distribusi: ["Persediaan (BHP)", "Distribusi Barang"],
+    unit_pengadaan: ["Pengadaan & Aset", "Ajukan Permintaan"],
     // calon mahasiswa
     calon_dashboard: ["Calon Mahasiswa", "Beranda"], calon_kartu: ["Seleksi Masuk", "Kartu Ujian"],
     calon_tes: ["Seleksi Masuk", "Ujian Masuk (CBT)"], calon_hasil: ["Seleksi Masuk", "Hasil Seleksi"],
@@ -464,19 +694,24 @@ window.AIS_ROLES = (function () {
     lppm_proposal: ["Penelitian & PkM", "Proposal & Review"], lppm_luaran: ["Penelitian & PkM", "Luaran & Publikasi"], lppm_hki: ["Penelitian & PkM", "HKI & Paten"],
     // lpm
     lpm_dashboard: ["Penjaminan Mutu", "Beranda"], lpm_audit: ["Penjaminan Mutu", "Audit Mutu Internal (AMI)"],
-    lpm_akreditasi: ["Penjaminan Mutu", "Akreditasi"], lpm_temuan: ["Penjaminan Mutu", "Temuan & Tindak Lanjut"], lpm_standar: ["Penjaminan Mutu", "Standar Mutu"],
+    lpm_akreditasi: ["Akreditasi", "Akreditasi & LKPS"], lpm_temuan: ["SPMI", "Temuan & Tindak Lanjut"], lpm_standar: ["SPMI", "Standar Mutu"],
+    lpm_sasaran: ["SPMI", "Sasaran & Capaian Mutu"], lpm_asesmen: ["Akreditasi", "Asesor & Asesmen"],
+    lpm_survei: ["Mutu & Risiko", "Survei Kepuasan"], lpm_dokumen: ["Mutu & Risiko", "Dokumen Mutu"], lpm_risiko: ["Mutu & Risiko", "Register Risiko & ISO"],
     // mbkm
     mbkm_dashboard: ["MBKM", "Beranda"], mbkm_program: ["Program MBKM", "Program & Lowongan"],
     mbkm_pendaftar: ["Program MBKM", "Pendaftar"], mbkm_konversi: ["Program MBKM", "Konversi SKS"], mbkm_mitra: ["Program MBKM", "Mitra"],
+    mhs_exp: ["Akademik", "MBKM, PKL & KKN"],
     // kkn
     kkn_dashboard: ["KKN", "Beranda"], kkn_periode: ["KKN", "Periode & Lokasi"],
+    kkn_pendaftar: ["KKN", "Pendaftar KKN"],
     kkn_kelompok: ["KKN", "Kelompok & DPL"], kkn_penilaian: ["KKN", "Penilaian"],
     // tu
     tu_dashboard: ["Tata Usaha", "Beranda"], tu_masuk: ["Persuratan", "Surat Masuk"],
     tu_keluar: ["Persuratan", "Surat Keluar"], tu_disposisi: ["Persuratan", "Disposisi"], tu_arsip: ["Persuratan", "Arsip Digital"],
     // itsm
-    itsm_dashboard: ["Layanan TI", "Beranda"], itsm_tiket: ["Layanan TI", "Tiket Layanan"],
+    itsm_dashboard: ["Layanan TI", "Beranda"], itsm_tiket: ["Layanan TI", "Tiket Insiden"],
     itsm_sla: ["Layanan TI", "SLA & Kinerja"], itsm_kb: ["Layanan TI", "Basis Pengetahuan"],
+    itsm_permintaan: ["Layanan TI", "Katalog Permintaan Layanan"], itsm_aset: ["Aset & Perubahan", "Aset TI & Lisensi"], itsm_change: ["Aset & Perubahan", "Manajemen Perubahan"],
     // kemahasiswaan
     kmhs_dashboard: ["Kemahasiswaan", "Beranda"], kmhs_ormawa: ["Kemahasiswaan", "Organisasi Mahasiswa"],
     kmhs_beasiswa: ["Kemahasiswaan", "Beasiswa"], kmhs_tracer: ["Alumni & Karir", "Tracer Study & Alumni"], kmhs_karir: ["Alumni & Karir", "Pusat Karir"],
@@ -485,6 +720,8 @@ window.AIS_ROLES = (function () {
     // humas
     hms_dashboard: ["Humas", "Beranda"], hms_berita: ["Informasi Publik", "Berita & Informasi"],
     hms_ppid: ["Informasi Publik", "Layanan PPID"], hms_pengaduan: ["Informasi Publik", "Pengaduan & Aspirasi"],
+    hms_pengumuman: ["Informasi Publik", "Pengumuman, Agenda & FAQ"], hms_broadcast: ["Publikasi & Survei", "Broadcast & Kampanye"], hms_survei: ["Publikasi & Survei", "Survei Layanan Publik"],
+    hms_event: ["Informasi Publik", "Agenda / Event"], hms_kategori: ["Informasi Publik", "Kelola Kategori"],
     // bau
     bau_dashboard: ["BAU", "Beranda"], bau_kendaraan: ["Umum & Rumah Tangga", "Kendaraan Dinas"], bau_rt: ["Umum & Rumah Tangga", "Rumah Tangga & Kebersihan"],
     // dokumen
@@ -492,6 +729,21 @@ window.AIS_ROLES = (function () {
     dok_tte: ["Dokumen & TTE", "Tanda Tangan Elektronik"], dok_verifikasi: ["Dokumen & TTE", "Verifikasi Keaslian (QR)"],
     // workflow
     wf_dashboard: ["Workflow", "Beranda"], wf_inbox: ["Persetujuan", "Kotak Persetujuan"], wf_alur: ["Persetujuan", "Definisi Alur"],
+    // tambahan
+    keu_ukt: ["Billing", "Master Tarif UKT"], keu_gateway: ["Billing", "Payment Gateway"],
+    pimp_dashboard: ["Pimpinan", "Dashboard Eksekutif"], pimp_search: ["Lintas Sistem", "Pencarian Global"],
+    pimp_akademik: ["Monitor Domain", "Monitor Akademik"], pimp_keuangan: ["Monitor Domain", "Monitor Keuangan & Tata Kelola"],
+    pimp_riset: ["Monitor Domain", "Monitor Riset, PkM & Kemahasiswaan"], pimp_mutu: ["Monitor Domain", "Monitor Mutu & Akreditasi"],
+    pimp_sdm: ["Monitor Domain", "Monitor SDM & Kepegawaian"], pimp_persetujuan: ["Keputusan", "Kotak Persetujuan Strategis"],
+    akun_dashboard: ["Akuntansi", "Beranda"], akun_jurnal: ["Jurnal & Buku Besar", "Jurnal Umum"],
+    akun_coa: ["Jurnal & Buku Besar", "Chart of Accounts"], akun_gl: ["Jurnal & Buku Besar", "Buku Besar"],
+    akun_rekon: ["Rekonsiliasi", "Rekonsiliasi GL vs Subledger"],
+    akun_ap: ["Belanja & Pencairan", "Belanja, Utang & Pencairan Dana"], akun_pajak: ["Belanja & Pencairan", "Pajak & Kepatuhan"],
+    akun_anggaran: ["Anggaran & Pelaporan", "Anggaran vs Realisasi (RKAT)"], akun_neraca: ["Anggaran & Pelaporan", "Neraca Saldo"],
+    akun_laporan: ["Anggaran & Pelaporan", "Laporan Keuangan"], akun_closing: ["Anggaran & Pelaporan", "Tutup Buku"],
+    baa_dashboard: ["BAA", "Beranda"], baa_status: ["Administrasi Akademik", "Layanan Status Mahasiswa"], baa_kalender: ["Administrasi Akademik", "Kalender Akademik"],
+    baa_jadwal: ["Administrasi Akademik", "Penjadwalan Terpusat"], baa_nilai: ["Nilai & Kelulusan", "Kunci Nilai & Transkrip"], baa_yudisium: ["Nilai & Kelulusan", "Yudisium & Ijazah"],
+    fdrop_dashboard: ["PDDikti", "Beranda"],
   };
 
   // ================= 34 MICROSERVICE (Daftar Service) =================
@@ -603,5 +855,3 @@ window.AIS_ROLES = (function () {
 
   return { personas, roleMeta, navByRole, titles, services, users, modules, rbac, auditLog, master };
 })();
-
-export {};

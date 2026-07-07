@@ -1,24 +1,15 @@
-# AIS - Sistem Informasi Akademik
+# siakad-frontend-guide
 
-Project ini sudah dikonversi ke React + TypeScript + Vite.
+Panduan & kerangka konfigurasi frontend SIAKAD (Next.js + TypeScript).
 
-## Struktur
+- **CLAUDE.md** — panduan lengkap (stack, struktur, BFF, Redux, next-auth, yup, TanStack SSR, framer-motion, Modul Level-3).
+- **AGENTS.md** — panduan operasional ringkas untuk agen AI.
+- **src/config/modules.ts** — ★ registry **453 Modul Level-3** (sumber tunggal navigasi + tolok ukur selesai).
+- **src/config/navigation.ts** — `buildNav`/`canAccess` (menu & RBAC diturunkan dari registry).
+- **src/types/module.ts** — tipe `ModuleL3`.
 
-- `src/main.tsx`: entry point React.
-- `src/router`: app shell, view registry, dan routing internal.
-- `src/pages`: halaman per domain/modul.
-- `src/components`: komponen UI bersama.
-- `src/data`: mock data, role/RBAC, dan ERD.
-- `src/config`: konfigurasi aplikasi.
-- `src/services`: wrapper service browser, seperti storage.
-- `src/lib`: helper umum.
-- `src/styles`: stylesheet global hasil migrasi desain lama.
-- `src/types`: deklarasi tipe global.
+## Penempatan
+Salin `CLAUDE.md` & `AGENTS.md` ke root repo frontend; salin `src/config/*` dan `src/types/module.ts` ke `src/` aplikasi. Sesuaikan alias `@/` ke `src/` di `tsconfig.json`.
 
-## Perintah
-
-```bash
-npm install
-npm run dev
-npm run build
-```
+## Prinsip inti
+Setiap menu **wajib** mengacu ke entri Modul Level-3. Aplikasi dinyatakan **selesai** ketika seluruh `status` pada `MODULES` = `done` (`completion().percent === 100`).
